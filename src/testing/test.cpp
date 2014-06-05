@@ -13,6 +13,14 @@ namespace jarvis_testing {
         return status;
     }
 
+    std::string Test::getName() {
+        return name;
+    }
+
+    std::string Test::getMessage() {
+        return mesg;
+    }
+
     void Test::error() {
         status = Error;
     }
@@ -41,7 +49,7 @@ namespace jarvis_testing {
     }
 
     void Test::skip() {
-        status = Skipped;
+        status = Skip;
     }
 
     void Test::skip(std::string mesg) {

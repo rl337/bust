@@ -9,6 +9,10 @@ void Suite::add(Test *test) {
     tests.push_back(test);
 }
 
+void Suite::add(Report *report) {
+    reports.push_back(report);
+}
+
 void Suite::run() {
     for(Test *test : tests) {
         try {
@@ -31,6 +35,9 @@ void Suite::run() {
             test->error(e.what());
         }
 
+        for(Report *report : reports) {
+            report->report(test);
+        }
     }
 }
 

@@ -1,9 +1,12 @@
+#ifndef __JT_TEST_H__
+#define __JT_TEST_H__
+
 #include <string>
 #include <exception>
 
 namespace jarvis_testing {
 
-    enum TestStatus { None, Pass, Fail, Error, Abort, Skipped };
+    enum TestStatus { None, Pass, Fail, Error, Abort, Skip };
 
     class Test {
             TestStatus status;
@@ -28,6 +31,8 @@ namespace jarvis_testing {
             void skip(std::string mesg);
 
             TestStatus getStatus();
+            std::string getName();
+            std::string getMessage();
 
             virtual void run() = 0;
             virtual void init() = 0;
@@ -35,3 +40,5 @@ namespace jarvis_testing {
     };
 
 }
+
+#endif
