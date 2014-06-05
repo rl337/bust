@@ -1,19 +1,19 @@
 #include <string>
+#include <exception>
 
 namespace jarvis_testing {
 
     enum TestStatus { None, Pass, Fail, Error, Abort, Skipped };
 
     class Test {
-            TestStatus Status;
-            std::string Name;
-            std::string Mesg;
+            TestStatus status;
+            std::string name;
+            std::string mesg;
+
+            void execute();
 
         public:
             Test(std::string name);
-
-            void init();
-            void cleanup();
 
             void fail();
             void fail(std::string mesg);
@@ -28,6 +28,10 @@ namespace jarvis_testing {
             void skip(std::string mesg);
 
             TestStatus getStatus();
+
+            virtual void run() = 0;
+            virtual void init() = 0;
+            virtual void cleanup() = 0;
     };
 
 }

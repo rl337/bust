@@ -3,55 +3,60 @@
 namespace jarvis_testing {
 
     Test::Test(std::string name) {
-        Name = name;
-        Status = None;
-        Mesg = "No Tests Executed";
+        name = name;
+        status = None;
+        mesg = "No Tests Executed";
     }
 
 
     TestStatus Test::getStatus() {
-        return Status;
-    }
-
-    void Test::init() {
-    }
-
-    void Test::cleanup() {
+        return status;
     }
 
     void Test::error() {
-        Status = Error;
+        status = Error;
     }
 
     void Test::error(std::string mesg) {
         error();
-        Mesg = mesg;
+        mesg = mesg;
     }
 
     void Test::fail() {
-        Status = Fail;
+        status = Fail;
     }
 
     void Test::fail(std::string mesg) {
         fail();
-        Mesg = mesg;
+        mesg = mesg;
     }
 
     void Test::abort() {
-        Status = Abort;
+        status = Abort;
     }
 
     void Test::abort(std::string mesg) {
         abort();
-        Mesg = mesg;
+        mesg = mesg;
     }
 
     void Test::skip() {
-        Status = Skipped;
+        status = Skipped;
     }
 
     void Test::skip(std::string mesg) {
         skip();
-        Mesg = mesg;
+        mesg = mesg;
     }
+
+    void Test::execute() {
+
+        try {
+            run();
+            status = Pass;
+        } catch (std::exception& e) {
+            error(e.what());
+        }
+    }
+
 }
