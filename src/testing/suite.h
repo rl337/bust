@@ -1,3 +1,6 @@
+#ifndef __SUITE_H__
+#define __SUITE_H__
+
 #include <string>
 #include <vector>
 #include "test.h"
@@ -19,3 +22,5 @@ namespace jarvis_testing {
     };
 
 }
+
+#endif
