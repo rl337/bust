@@ -13,7 +13,8 @@ namespace jarvis_testing {
             std::string name;
             std::string mesg;
 
-            void execute();
+        protected:
+            virtual void run() = 0;
 
         public:
             Test(std::string name);
@@ -34,9 +35,11 @@ namespace jarvis_testing {
             std::string getName();
             std::string getMessage();
 
-            virtual void run() = 0;
+            void execute();
+
             virtual void init() = 0;
             virtual void cleanup() = 0;
+            virtual ~Test() {};
     };
 
 }

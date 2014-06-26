@@ -3,9 +3,9 @@
 namespace jarvis_testing {
 
     Test::Test(std::string name) {
-        name = name;
-        status = None;
-        mesg = "No Tests Executed";
+        this->name = name;
+        this->status = None;
+        this->mesg = "No Tests Executed";
     }
 
 
@@ -22,39 +22,39 @@ namespace jarvis_testing {
     }
 
     void Test::error() {
-        status = Error;
+        this->status = Error;
     }
 
     void Test::error(std::string mesg) {
         error();
-        mesg = mesg;
+        this->mesg = mesg;
     }
 
     void Test::fail() {
-        status = Fail;
+        this->status = Fail;
     }
 
     void Test::fail(std::string mesg) {
         fail();
-        mesg = mesg;
+        this->mesg = mesg;
     }
 
     void Test::abort() {
-        status = Abort;
+        this->status = Abort;
     }
 
     void Test::abort(std::string mesg) {
         abort();
-        mesg = mesg;
+        this->mesg = mesg;
     }
 
     void Test::skip() {
-        status = Skip;
+        this->status = Skip;
     }
 
     void Test::skip(std::string mesg) {
         skip();
-        mesg = mesg;
+        this->mesg = mesg;
     }
 
     void Test::execute() {
@@ -62,6 +62,7 @@ namespace jarvis_testing {
         try {
             run();
             status = Pass;
+            this->mesg = "Pass";
         } catch (std::exception& e) {
             error(e.what());
         }

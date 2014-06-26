@@ -23,7 +23,7 @@ void Suite::run() {
 
         if (test->getStatus() == None) {
             try {
-                test->run();
+                test->execute();
             } catch (std::exception& e) {
                 test->error(e.what());
             }
