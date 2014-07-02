@@ -28,6 +28,9 @@ namespace jarvis_testing {
             case Abort:
                 status = "A";
                 break;
+            case Error:
+                status = "E";
+                break;
             case Skip:
                 status = "S";
                 break;
