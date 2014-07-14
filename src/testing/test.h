@@ -2,6 +2,8 @@
 #define __JT_TEST_H__
 
 #include <string>
+#include <iostream>
+#include <sstream>
 #include <exception>
 
 namespace jarvis_testing {
@@ -31,6 +33,18 @@ namespace jarvis_testing {
 
             void skip();
             void skip(std::string mesg);
+
+            void assertEqual(std::string mesg, int expected, int actual);
+            void assertEqual(std::string mesg, long expected, long actual);
+            void assertEqual(std::string mesg, double expected, double actual, double error);
+            void assertEqual(std::string mesg, double expected, double actual);
+            void assertEqual(std::string mesg, std::string expected, std::string actual);
+
+            void assertNotEqual(std::string mesg, int expected, int actual);
+            void assertNotEqual(std::string mesg, long expected, long actual);
+            void assertNotEqual(std::string mesg, double expected, double actual, double error);
+            void assertNotEqual(std::string mesg, double expected, double actual);
+            void assertNotEqual(std::string mesg, std::string expected, std::string actual);
 
             TestStatus getStatus();
             std::string getName();

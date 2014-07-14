@@ -15,10 +15,23 @@ class TestingBaseTest : public Test {
 
 
 class TestingStatusTest : public TestingBaseTest {
+
     public:
         TestingStatusTest() : TestingBaseTest("TestingStatusTest") {};
     	virtual void run();
         virtual ~TestingStatusTest() {}
+
+        void errorWithException();
+        void failWithAssertEqualString();
+        void failWithAssertEqualInt();
+        void failWithAssertEqualLong();
+        void failWithAssertEqualDouble();
+
+        void failWithAssertNotEqualString();
+        void failWithAssertNotEqualInt();
+        void failWithAssertNotEqualLong();
+        void failWithAssertNotEqualDouble();
+
 };
 
 

@@ -1,6 +1,7 @@
 #include "test.h"
 
 namespace jarvis_testing {
+    const double default_error = 1.0e-80;
 
     Test::Test(std::string name) {
         this->name = name;
@@ -51,6 +52,69 @@ namespace jarvis_testing {
 
     void Test::skip(std::string mesg) {
         throw AssertionSkip(mesg);
+    }
+
+    template<typename X> std::string _message(std::string name, std::string mesg, X expected, X actual) {
+        std::stringstream x;
+        x << name << ": " << mesg << " Expected: " << expected << " Actual: " << actual;
+        return x.str();
+    }
+
+    void Test::assertEqual(std::string mesg, int expected, int actual) {
+        if (expected != actual) {
+            throw AssertionFail(_message<int>(name, mesg, expected, actual));
+        }
+    }
+
+    void Test::assertEqual(std::string mesg, long expected, long actual) {
+        if (expected != actual) {
+            throw AssertionFail(_message<long>(name, mesg, expected, actual));
+        }
+    }
+
+    void Test::assertEqual(std::string mesg, double expected, double actual, double error) {
+        float low = expected - error;
+        float high = expected + error;
+        if (actual < low || actual > high) {
+            throw AssertionFail(_message<double>(name, mesg, expected, actual));
+        }
+    }
+
+    void Test::assertEqual(std::string mesg, double expected, double actual) {
+        this->assertEqual(mesg, expected, actual, default_error);
+    }
+
+    void Test::assertEqual(std::string mesg, std::string expected, std::string actual) {
+        if (expected != actual) {
+            throw AssertionFail(_message<std::string>(name, mesg, expected, actual));
+        }
+    }
+
+    void Test::assertNotEqual(std::string mesg, int expected, int actual) {
+        if (expected != actual) {
+            throw AssertionFail(_message<int>(name, mesg, expected, actual));
+        }
+    }
+
+    void Test::assertNotEqual(std::string mesg, long expected, long actual) {
+        if (expected != actual) {
+            throw AssertionFail(_message<long>(name, mesg, expected, actual));
+        }
+    }
+
+    void Test::assertNotEqual(std::string mesg, double expected, double actual, double error) {
+        float low = expected - error;
+        float high = expected + error;
+        if (actual >= low && actual <= high) {
+            throw AssertionFail(_message<long>(name, mesg, expected, actual));
+        }
+    }
+
+    void Test::assertNotEqual(std::string mesg, double expected, double actual) {
+        this->assertNotEqual(mesg, expected, actual, default_error);
+    }
+
+    void Test::assertNotEqual(std::string mesg, std::string expected, std::string actual) {
     }
 
     void Test::execute() {
