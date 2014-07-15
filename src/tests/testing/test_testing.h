@@ -5,21 +5,29 @@
 
 namespace jarvis_testing {
 
-class TestingBaseTest : public Test {
+class TestingStatusTest : public Test {
     
     public:
-        TestingBaseTest(std::string name) : Test(name) {};
-        virtual void init() {};
-        virtual void cleanup() {};
+        TestingStatusTest() : Test("TestingStatusTest") {};
+        void init() {};
+        void run();
+        void cleanup() {};
 };
 
 
-class TestingStatusTest : public TestingBaseTest {
+class TestingTestTest : public Test {
+    private:
+        void (*action)(TestingTestTest *t);
 
     public:
-        TestingStatusTest() : TestingBaseTest("TestingStatusTest") {};
-    	virtual void run();
-        virtual ~TestingStatusTest() {}
+        void setAction(void (*x)(TestingTestTest *t));
+    	// virtual void run();
+        TestingTestTest(std::string name) : Test(name) {};
+        // virtual ~TestingStatusTest() {}
+
+        void init() {};
+        void run();
+        void cleanup() {};
 
         void errorWithException();
         void failWithAssertEqualString();
