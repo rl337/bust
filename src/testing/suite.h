@@ -1,12 +1,12 @@
-#ifndef __SUITE_H__
-#define __SUITE_H__
+#ifndef __JV_SUITE_H__
+#define __JV_SUITE_H__
 
 #include <string>
 #include <vector>
 #include "test.h"
 #include "report.h"
 
-namespace jarvis_testing {
+namespace testing {
 
     class Suite {
             std::vector<Test *> tests;

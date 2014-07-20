@@ -1,6 +1,6 @@
 #include "test_testing.h"
 
-namespace jarvis_testing {
+namespace testing {
 
 typedef struct {
    std::string name;

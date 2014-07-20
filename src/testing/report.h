@@ -1,11 +1,11 @@
-#ifndef __REPORT_H__
-#define __REPORT_H__
+#ifndef __JV_REPORT_H__
+#define __JV_REPORT_H__
 
 #include <string>
 #include <vector>
 #include "test.h"
 
-namespace jarvis_testing {
+namespace testing {
 
     class Report {
 

@@ -1,7 +1,7 @@
 #include "suite.h"
 #include <string>
 
-namespace jarvis_testing {
+namespace testing {
 
 Suite::Suite(std::string name) : name(name) { }
 

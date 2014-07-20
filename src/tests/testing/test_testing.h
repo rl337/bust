@@ -3,7 +3,7 @@
 #include "suite.h"
 #include "test.h"
 
-namespace jarvis_testing {
+namespace testing {
 
 class TestingStatusTest : public Test {
     

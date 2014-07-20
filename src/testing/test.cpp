@@ -1,6 +1,6 @@
 #include "test.h"
 
-namespace jarvis_testing {
+namespace testing {
     const double default_error = 1.0e-80;
 
     Test::Test(std::string name) {

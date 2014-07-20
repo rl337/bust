@@ -1,7 +1,7 @@
 #include <iostream>
 #include "report.h"
 
-namespace jarvis_testing {
+namespace testing {
 
     void StdoutReport::report(Test *t) {
         if (t == NULL) {

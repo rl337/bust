@@ -4,10 +4,10 @@
 
 int main (int argc, char *argv[]) {
 
-     jarvis_testing::Suite *testingSuite = new jarvis_testing::Suite("Who Tests the Testers?");
-     testingSuite->add(new jarvis_testing::TestingStatusTest());
+     testing::Suite *testingSuite = new testing::Suite("Who Tests the Testers?");
+     testingSuite->add(new testing::TestingStatusTest());
 
-     jarvis_testing::StdoutReport *report = new jarvis_testing::StdoutReport();
+     testing::StdoutReport *report = new testing::StdoutReport();
      testingSuite->add(report);
 
      testingSuite->run();
