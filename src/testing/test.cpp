@@ -91,13 +91,13 @@ namespace jarvis_testing {
     }
 
     void Test::assertNotEqual(std::string mesg, int expected, int actual) {
-        if (expected != actual) {
+        if (expected == actual) {
             throw AssertionFail(_message<int>(name, mesg, expected, actual));
         }
     }
 
     void Test::assertNotEqual(std::string mesg, long expected, long actual) {
-        if (expected != actual) {
+        if (expected == actual) {
             throw AssertionFail(_message<long>(name, mesg, expected, actual));
         }
     }
@@ -115,6 +115,9 @@ namespace jarvis_testing {
     }
 
     void Test::assertNotEqual(std::string mesg, std::string expected, std::string actual) {
+        if (expected == actual) {
+            throw AssertionFail(_message<std::string>(name, mesg, expected, actual));
+        }
     }
 
     void Test::execute() {
