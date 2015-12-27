@@ -13,16 +13,21 @@ namespace math {
             std::size_t count;
 
         public:
-            Vector(std::size_t length) : content(new double[length]), count(length) {}
+            Vector(std::size_t length);
+            Vector(double *data, std::size_t length);
+            Vector(double *data, std::size_t offset, std::size_t length);
+            ~Vector();
 
-            inline void           set(std::size_t index, double value);
-            inline double         get(std::size_t index);
-            inline void           clear();
-            inline void           clear(double value);
+            void                  set(std::size_t index, double value);
+            double                get(std::size_t index);
+
+            inline void           clear() { this->clear(0.0); }
+            void                  clear(double value);
 
             inline std::size_t    getSize() { return this->count; }
+
             void                  translate(Vector *b);
-            inline void           scale(double s);
+            void                  scale(double s);
     };
 
     class VectorSizeMismatch: public std::exception {
@@ -36,6 +41,12 @@ namespace math {
             return "Vector operation requires non-null argument";
         }
     } vector_null_error;
+
+    class VectorBoundsException: public std::exception {
+        virtual const char* what() const throw() {
+            return "Vector operation exceeded bounds";
+        }
+    } vector_bounds_error;
 }
 
 
