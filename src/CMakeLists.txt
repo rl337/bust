@@ -12,7 +12,7 @@ include_directories("${PROJECT_SOURCE_DIR}/testing")
 include_directories("${PROJECT_SOURCE_DIR}/math")
 
 add_library(jarvistesting SHARED testing/suite.cpp testing/test.cpp testing/report.cpp)
-add_library(jarvismath SHARED math/bitsets.cpp )
-add_executable(jarvistests tests/main.cpp tests/testing/test_testing.cpp tests/math/test_bitsets.cpp)
+add_library(jarvismath SHARED math/bitsets.cpp math/vector.cpp)
+add_executable(jarvistests tests/main.cpp tests/testing/test_testing.cpp tests/math/test_bitsets.cpp tests/math/test_vector.cpp)
 target_link_libraries(jarvistests jarvismath jarvistesting)
 
