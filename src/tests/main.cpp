@@ -3,6 +3,7 @@
 #include "testing/test_testing.h"
 #include "math/test_bitsets.h"
 #include "math/test_vector.h"
+#include "svg/test_svg.h"
 
 int main (int argc, char *argv[]) {
 
@@ -10,6 +11,7 @@ int main (int argc, char *argv[]) {
      testingSuite->add(new testing::TestingStatusTest());
      testingSuite->add(new math::MathBitSetsTest());
      testingSuite->add(new math::MathVectorTest());
+     testingSuite->add(new svg::SVGColorTest());
 
      testing::StdoutReport *report = new testing::StdoutReport();
      testingSuite->add(report);
