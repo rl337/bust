@@ -18,5 +18,7 @@ int main (int argc, char *argv[]) {
 
      testingSuite->run();
 
+     delete testingSuite;
+
      return 0;
 }

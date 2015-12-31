@@ -15,6 +15,8 @@ namespace testing {
 
         public:
             Suite(std::string name);
+            ~Suite();
+
             void add(Test *t);
             void add(Report *t);
 

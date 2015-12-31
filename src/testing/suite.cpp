@@ -5,6 +5,13 @@ namespace testing {
 
 Suite::Suite(std::string name) : name(name) { }
 
+Suite::~Suite() {
+    // std::vector destroys contents when clears.
+    // no need to delete explicitly.
+    tests.clear();
+    reports.clear();
+}
+
 void Suite::add(Test *test) {
     tests.push_back(test);
 }
