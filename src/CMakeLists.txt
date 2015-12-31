@@ -24,6 +24,7 @@ add_library(jv_math SHARED
 
 add_library(jv_svg SHARED
     svg/color.cpp
+    svg/style.cpp
 )
 
 add_library(test_testing SHARED

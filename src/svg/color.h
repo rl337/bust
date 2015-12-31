@@ -1,5 +1,5 @@
-#ifndef __JV_SVG_H__
-#define __JV_SVG_H__
+#ifndef __JV_SVG_COLOR_H__
+#define __JV_SVG_COLOR_H__
 
 #include <cstddef>
 #include <string>
@@ -20,6 +20,7 @@ namespace svg {
     };
 
     namespace colors {
+        static const Color None("none");
         static const Color AliceBlue("aliceblue");
         static const Color Azure("azure");
         static const Color BlanchedAlmond("blanchedalmond");

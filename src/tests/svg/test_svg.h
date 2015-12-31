@@ -1,4 +1,6 @@
 #include "test.h"
+
+#include "style.h"
 #include "color.h"
 
 namespace svg {
