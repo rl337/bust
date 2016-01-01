@@ -1,21 +1,33 @@
-#ifndef __JV_REPORT_H__
-#define __JV_REPORT_H__
+#ifndef __JV_TESTING_REPORT_H__
+#define __JV_TESTING_REPORT_H__
 
 #include <string>
 #include <vector>
+
 #include "test.h"
+#include "suite.h"
 
 namespace testing {
+
+    class Suite;
 
     class Report {
 
         public:
-            virtual void report(Test *t) = 0;
+            virtual void report(Suite *s, Test *t) = 0;
     };
 
     class StdoutReport : public Report {
         public:
-            void report(Test *t);
+            void report(Suite *s, Test *t);
+    };
+
+    class MultiReport : public Report {
+        private:
+            std::vector<Report *> reports;
+        public:
+            void report(Suite *s, Test *t);
+            void add(Report *r);
     };
 
 }

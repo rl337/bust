@@ -3,7 +3,7 @@
 
 namespace testing {
 
-    void StdoutReport::report(Test *t) {
+    void StdoutReport::report(Suite *s, Test *t) {
         if (t == NULL) {
             std::cout << "TEST WAS NULL" << std::endl;
             return;
@@ -46,4 +46,13 @@ namespace testing {
         std::cout << status << " " << name << ": " << mesg << std::endl;
     }
 
+    void MultiReport::add(Report *report) {
+        this->reports.push_back(report);
+    }
+
+    void MultiReport::report(Suite *s, Test *t) {
+        for (Report *report : reports) {
+            report->report(s, t);
+        }
+    }
 }

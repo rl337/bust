@@ -1,16 +1,18 @@
-#ifndef __JV_SUITE_H__
-#define __JV_SUITE_H__
+#ifndef __JV_TESTING_SUITE_H__
+#define __JV_TESTING_SUITE_H__
 
 #include <string>
 #include <vector>
+
 #include "test.h"
 #include "report.h"
 
 namespace testing {
 
+    class Report;
+
     class Suite {
             std::vector<Test *> tests;
-            std::vector<Report *> reports;
             std::string name;
 
         public:
@@ -18,9 +20,8 @@ namespace testing {
             ~Suite();
 
             void add(Test *t);
-            void add(Report *t);
 
-            void run();
+            void run(Report *report);
     };
 
 }

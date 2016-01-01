@@ -9,18 +9,13 @@ Suite::~Suite() {
     // std::vector destroys contents when clears.
     // no need to delete explicitly.
     tests.clear();
-    reports.clear();
 }
 
 void Suite::add(Test *test) {
     tests.push_back(test);
 }
 
-void Suite::add(Report *report) {
-    reports.push_back(report);
-}
-
-void Suite::run() {
+void Suite::run(Report *report) {
     for(Test *test : tests) {
         try {
             test->init();
@@ -42,9 +37,7 @@ void Suite::run() {
             test->error(e.what());
         }
 
-        for(Report *report : reports) {
-            report->report(test);
-        }
+        report->report(this, test);
     }
 }
 
