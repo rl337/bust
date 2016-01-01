@@ -13,6 +13,7 @@ include_directories("${PROJECT_SOURCE_DIR}/math")
 include_directories("${PROJECT_SOURCE_DIR}/svg")
 
 add_library(jv_testing SHARED
+    testing/runner.cpp
     testing/suite.cpp
     testing/test.cpp
     testing/report.cpp
@@ -23,6 +24,7 @@ add_library(jv_math SHARED
 )
 
 add_library(jv_svg SHARED
+    svg/svg.cpp
     svg/color.cpp
     svg/style.cpp
 )
@@ -43,6 +45,7 @@ target_link_libraries( test_math
 
 add_library(test_svg SHARED
     tests/svg/test_svg.cpp
+    tests/svg/test_color.cpp
 )
 target_link_libraries( test_svg
     jv_testing

@@ -12,8 +12,17 @@ namespace svg {
             std::string value;
 
         public:
-            Color(std::string n, std::string v) : name(n), value(v) {};
-            Color(std::string v) : name(v), value(v) {};
+            Color(const std::string n, std::string v) : name(n), value(v) {};
+            Color(const std::string v) : name(v), value(v) {};
+            Color(const Color &c) : name(c.name), value(c.value) {};
+
+            inline bool operator==(const Color &rhs) {
+                return this->name == rhs.name && this->value == rhs.value;
+            }
+
+            inline bool operator!=(const Color &rhs) {
+                return this->name != rhs.name || this->value != rhs.value;
+            }
 
             inline std::string getName() const { return this->name; }
             inline std::string getValue() const { return this->value; }

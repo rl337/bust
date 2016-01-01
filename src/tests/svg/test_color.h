@@ -5,10 +5,10 @@
 
 namespace svg {
 
-    class SVGSVGTest : public testing::Test {
+    class SVGColorTest : public testing::Test {
 
         public:
-            SVGSVGTest() : testing::Test("SVGSVGTest") {}
+            SVGColorTest() : testing::Test("SVGColorTest") {}
 
             void run();
             void init(){};

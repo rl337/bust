@@ -1,34 +1,54 @@
 #ifndef __JV_SVG_H__
 #define __JV_SVG_H__
 
+#include <cstddef>
+#include <string>
+#include <vector>
+#include <iostream>
+
+#include "style.h"
+
 namespace svg {
 
-    class svg {
+    class SVG {
         private:
             std::string title;
             std::string description;
-            
-    }
+    };
 
-
-    class style {
-        static const std::string FILL = "fill";
-        static const std::string STROKE = "stroke";
-        static const std::string STROKE_WIDTH = "stroke-width";
-
-        static const std::string NONE = "none";
-
-        static const std::string NONE = "none";
-
+    class Shape {
         private:
-    }
+            Style style;
 
-    typedef union style_value {
-    }
+        protected:
+            void appendStyle(std::ostream &stream, Style &style);
 
-    class shape {
+        public:
+            Shape();
+            ~Shape();
 
-    }
+            inline Style getStyle() { return this->style; }
+
+            virtual void append(std::ostream &stream) = 0;
+    };
+
+    class Rectangle : public Shape {
+        private:
+            int x;
+            int y;
+            int width;
+            int height;
+
+            Style style;
+
+        public:
+            inline int getX() { return this->x; }
+            inline int getY() { return this->y; }
+            inline int getWidth() { return this->width; }
+            inline int getHeight() { return this->height; }
+ 
+            void append(std::ostream &stream);
+    };
 
 }
 
