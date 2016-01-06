@@ -31,12 +31,14 @@ add_library(jv_svg SHARED
 
 add_library(test_testing SHARED
     tests/testing/test_testing.cpp
+    tests/testing/testing_suite.cpp
 )
 target_link_libraries( test_testing jv_testing )
 
 add_library(test_math SHARED
     tests/math/test_bitsets.cpp
     tests/math/test_vector.cpp
+    tests/math/math_suite.cpp
 )
 target_link_libraries( test_math
     jv_testing
@@ -46,9 +48,11 @@ target_link_libraries( test_math
 add_library(test_svg SHARED
     tests/svg/test_svg.cpp
     tests/svg/test_color.cpp
+    tests/svg/svg_suite.cpp
 )
 target_link_libraries( test_svg
     jv_testing
+    jv_svg
 )
 
 add_executable(jv_tests
@@ -56,8 +60,6 @@ add_executable(jv_tests
 )
 
 target_link_libraries( jv_tests
-    jv_testing
-    jv_svg
     test_testing
     test_math
     test_svg

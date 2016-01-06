@@ -3,11 +3,16 @@
 
 namespace testing {
 
-Suite::Suite(std::string name) : name(name) { }
+Suite::Suite(std::string name, bool autodelete) : name(name), autodelete(autodelete) { }
+Suite::Suite(std::string name) : name(name), autodelete(false) { }
 
 Suite::~Suite() {
-    // std::vector destroys contents when clears.
-    // no need to delete explicitly.
+    if (this->autodelete) {
+        for(Test *test : tests) {
+            delete test;
+        }
+    }
+
     tests.clear();
 }
 

@@ -14,6 +14,11 @@ namespace testing {
             name = "Unnamed";
         }
 
+        std::string suite = s->getName();
+        if (suite.length() < 1) {
+            name = "Unnamed";
+        }
+
         std::string status;
         switch(t->getStatus()) {
             case None:
@@ -43,7 +48,7 @@ namespace testing {
             mesg = "No Message";
         }
 
-        std::cout << status << " " << name << ": " << mesg << std::endl;
+        std::cout << status << " " << suite << ':' << name << ": " << mesg << std::endl;
     }
 
     void MultiReport::add(Report *report) {

@@ -1,23 +1,26 @@
 #include "test.h"
 #include "suite.h"
-#include "testing/test_testing.h"
-#include "math/test_bitsets.h"
-#include "math/test_vector.h"
-// #include "svg/svg_suite.h"
+#include "runner.h"
+
+#include "testing/testing_suite.h"
+#include "math/math_suite.h"
+#include "svg/svg_suite.h"
 
 int main (int argc, char *argv[]) {
 
-     testing::Suite *testingSuite = new testing::Suite("Who Tests the Testers?");
-     testingSuite->add(new testing::TestingStatusTest());
-     testingSuite->add(new math::MathBitSetsTest());
-     testingSuite->add(new math::MathVectorTest());
- //    testingSuite->add(new svg::SVGColorTest());
+     testing::TestingSuite testingSuite;
+     math::MathSuite mathSuite;
+     svg::SVGSuite svgSuite;
+
+     testing::Runner runner;
+     runner.add(&testingSuite);
+     runner.add(&mathSuite);
+     runner.add(&svgSuite);
 
      testing::StdoutReport *report = new testing::StdoutReport();
+     runner.add(report);
 
-     testingSuite->run(report);
-
-     delete testingSuite;
+     runner.run();
 
      return 0;
 }
