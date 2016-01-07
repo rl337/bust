@@ -3,8 +3,6 @@
 
 namespace svg {
 
-    Shape::~Shape() { }
-
     void Shape::appendStyle(std::ostream &stream, Style &style) {
          
         Color fill = style.getFill();
@@ -16,7 +14,7 @@ namespace svg {
         std::uint8_t stroke_width = style.getStrokeWidth();
         if (stroke != colors::None && stroke_width > 0) {
             stream << "stroke=\"" << stroke.getValue() << "\" " <<
-                "stroke-width=\"" << stroke_width << "\"";
+                "stroke-width=\"" << (int) stroke_width << "\"";
         }
     }
 
@@ -28,7 +26,7 @@ namespace svg {
             "\" width=\"" << this->width << 
             "\" height=\"" << this->height << "\" ";
          
-        this->appendStyle(stream, this->style);
+        this->appendStyle(stream, this->getStyle());
 
         stream <<  "/>";
     }

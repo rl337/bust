@@ -24,10 +24,9 @@ namespace svg {
             void appendStyle(std::ostream &stream, Style &style);
 
         public:
-            Shape();
-            ~Shape();
+            Shape(Style s) : style(s) {}
 
-            inline Style getStyle() { return this->style; }
+            inline Style &getStyle() { return this->style; }
 
             virtual void append(std::ostream &stream) = 0;
     };
@@ -39,9 +38,10 @@ namespace svg {
             int width;
             int height;
 
-            Style style;
-
         public:
+            Rectangle(int x, int y, int w, int h, Style s) : Shape(s), x(x), y(y), width(w), height(h) { }
+            Rectangle(int x, int y, int w, int h) : Shape(styles::Default), x(x), y(y), width(w), height(h) { }
+
             inline int getX() { return this->x; }
             inline int getY() { return this->y; }
             inline int getWidth() { return this->width; }

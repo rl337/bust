@@ -2,6 +2,7 @@
 
 #include "style.h"
 #include "color.h"
+#include "svg.h"
 
 namespace svg {
 
