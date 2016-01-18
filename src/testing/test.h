@@ -35,13 +35,17 @@ namespace testing {
             void skip(std::string mesg);
 
             void assertEqual(std::string mesg, int expected, int actual);
+            void assertEqual(std::string mesg, unsigned expected, unsigned actual);
             void assertEqual(std::string mesg, long expected, long actual);
+            void assertEqual(std::string mesg, unsigned long expected, unsigned long actual);
             void assertEqual(std::string mesg, double expected, double actual, double error);
             void assertEqual(std::string mesg, double expected, double actual);
             void assertEqual(std::string mesg, std::string expected, std::string actual);
 
             void assertNotEqual(std::string mesg, int expected, int actual);
+            void assertNotEqual(std::string mesg, unsigned expected, unsigned actual);
             void assertNotEqual(std::string mesg, long expected, long actual);
+            void assertNotEqual(std::string mesg, unsigned long expected, unsigned long actual);
             void assertNotEqual(std::string mesg, double expected, double actual, double error);
             void assertNotEqual(std::string mesg, double expected, double actual);
             void assertNotEqual(std::string mesg, std::string expected, std::string actual);

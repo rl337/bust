@@ -66,7 +66,19 @@ namespace testing {
         }
     }
 
+    void Test::assertEqual(std::string mesg, unsigned expected, unsigned actual) {
+        if (expected != actual) {
+            throw AssertionFail(_message<int>(name, mesg, expected, actual));
+        }
+    }
+
     void Test::assertEqual(std::string mesg, long expected, long actual) {
+        if (expected != actual) {
+            throw AssertionFail(_message<long>(name, mesg, expected, actual));
+        }
+    }
+
+    void Test::assertEqual(std::string mesg, unsigned long expected, unsigned long actual) {
         if (expected != actual) {
             throw AssertionFail(_message<long>(name, mesg, expected, actual));
         }
@@ -96,7 +108,19 @@ namespace testing {
         }
     }
 
+    void Test::assertNotEqual(std::string mesg, unsigned expected, unsigned actual) {
+        if (expected == actual) {
+            throw AssertionFail(_message<int>(name, mesg, expected, actual));
+        }
+    }
+
     void Test::assertNotEqual(std::string mesg, long expected, long actual) {
+        if (expected == actual) {
+            throw AssertionFail(_message<long>(name, mesg, expected, actual));
+        }
+    }
+
+    void Test::assertNotEqual(std::string mesg, unsigned long expected, unsigned long actual) {
         if (expected == actual) {
             throw AssertionFail(_message<long>(name, mesg, expected, actual));
         }
