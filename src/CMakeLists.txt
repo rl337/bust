@@ -11,6 +11,7 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11")
 include_directories("${PROJECT_SOURCE_DIR}/testing")
 include_directories("${PROJECT_SOURCE_DIR}/math")
 include_directories("${PROJECT_SOURCE_DIR}/svg")
+include_directories("${PROJECT_SOURCE_DIR}/png")
 
 add_library(jv_testing SHARED
     testing/runner.cpp
@@ -20,8 +21,15 @@ add_library(jv_testing SHARED
 )
 
 add_library(jv_math SHARED
-    math/bitsets.cpp math/vector.cpp
+    math/bitsets.cpp
+    math/vector.cpp
+    math/checksums.cpp
 )
+
+add_library(jv_png SHARED
+    png/png.cpp
+)
+target_link_libraries( jv_png jv_math )
 
 add_library(jv_svg SHARED
     svg/svg.cpp
@@ -38,6 +46,7 @@ target_link_libraries( test_testing jv_testing )
 add_library(test_math SHARED
     tests/math/test_bitsets.cpp
     tests/math/test_vector.cpp
+    tests/math/test_checksums.cpp
     tests/math/math_suite.cpp
 )
 target_link_libraries( test_math
@@ -53,6 +62,7 @@ add_library(test_svg SHARED
 target_link_libraries( test_svg
     jv_testing
     jv_svg
+    jv_png
 )
 
 add_executable(jv_tests
