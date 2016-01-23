@@ -75,3 +75,11 @@ target_link_libraries( jv_tests
     test_svg
 )
 
+add_executable(jv_colorbars
+    utils/colorbars/main.cpp
+)
+
+target_link_libraries( jv_colorbars
+    jv_math
+    jv_png
+)

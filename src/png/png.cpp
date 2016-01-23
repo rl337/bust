@@ -22,7 +22,6 @@ namespace png {
     void PNG::appendZLibStream(std::ostream &stream, uint8_t *data, uint16_t size) {
         stream.write(reinterpret_cast<char *>(const_cast<uint16_t *>(&ZLIB_HEADER)), sizeof(uint16_t));
         this->appendRawDeflateData(stream, data, size);
-
         uint32_t sum = this->adler.get(data, size);
         stream.write(reinterpret_cast<char *>(&sum), sizeof(uint32_t));
     }
@@ -43,9 +42,9 @@ namespace png {
             this->appendRawDeflateBlock(stream, 1, data, size);
             return;
         } 
-        
+
         for (uint16_t i = 0; i < chunks-1; i++) {
-            this->appendRawDeflateBlock(stream, 1, data + (DEFLATE_MAX_BLOCKSIZE * i), size);
+            this->appendRawDeflateBlock(stream, 0, data + (DEFLATE_MAX_BLOCKSIZE * i), DEFLATE_MAX_BLOCKSIZE);
         }
 
         uint16_t rest = size % DEFLATE_MAX_BLOCKSIZE;
@@ -73,6 +72,11 @@ namespace png {
         appendChunk(stream, CHUNK_TYPE_IHDR, reinterpret_cast<uint8_t *>(&this->ihdr), sizeof(IHDRChunk));
         std::stringstream zlibstream;
         this->appendZLibStream(zlibstream, reinterpret_cast<uint8_t *>(&this->buffer), this->ihdr.width * this->ihdr.height * sizeof(uint32_t));
+        /*
+        std::string zlibstream_str = zlibstream.str();
+        //appendChunk(stream, CHUNK_TYPE_IDAT, reinterpret_cast<uint8_t *>(const_cast<char *>(zlibstream_str.c_str())), zlibstream_str.length());
+        */
+        appendChunk(stream, CHUNK_TYPE_IEND, nullptr, 0);
     }
 
 }
