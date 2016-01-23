@@ -30,8 +30,8 @@ namespace png {
              uint32_t *buffer;
              IHDRChunk ihdr;
 
-             math::CRC32 crc;
-             math::Adler32 adler;
+             util::CRC32 crc;
+             util::Adler32 adler;
 
              void appendChunk(std::ostream &stream, uint32_t type, uint8_t *data, size_t size);
              void appendRawDeflate(std::ostream &stream, uint8_t last, uint8_t *data, size_t size);
@@ -40,7 +40,8 @@ namespace png {
              void appendZLibStream(std::ostream &stream, uint8_t *data, uint16_t size);
 
              // first part of header with 0x89 followed by 'PNG'
-             const uint32_t PNG_HEADER1 = 0x89504E47;
+             // const uint32_t PNG_HEADER1 = 0x89504E47;
+             const uint32_t PNG_HEADER1 = 0x474E5089;
 
              // 2nd part of header with DOS newline, 0x1A and Unix newline
              const uint32_t PNG_HEADER2 =  0x0D0A1A0A;
@@ -48,9 +49,12 @@ namespace png {
              const uint16_t ZLIB_HEADER =  0x7801;
              const uint16_t DEFLATE_MAX_BLOCKSIZE = 0xFFFF;
 
-             const uint32_t CHUNK_TYPE_IHDR = 0x49484452;
-             const uint32_t CHUNK_TYPE_IDAT = 0x49444154;
-             const uint32_t CHUNK_TYPE_IEND = 0x49454e44;
+             //const uint32_t CHUNK_TYPE_IHDR = 0x49484452;
+             const uint32_t CHUNK_TYPE_IHDR = 0x52444849;
+             //const uint32_t CHUNK_TYPE_IDAT = 0x49444154;
+             const uint32_t CHUNK_TYPE_IDAT = 0x54414449;
+             //const uint32_t CHUNK_TYPE_IEND = 0x49454e44;
+             const uint32_t CHUNK_TYPE_IEND = 0x444e4549;
 
         public:
             PNG(uint32_t width, uint32_t height);

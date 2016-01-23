@@ -3,7 +3,7 @@
 
 #include <cstdint>
 
-namespace math {
+namespace util {
 
     class Checksum32 {
         public:

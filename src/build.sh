@@ -4,6 +4,26 @@ CMD="$1"
 BUILDDIR="build"
 STARTDIR=`pwd`
 
+
+CMD=build
+TYPE=release
+while [ "X$1" != X ]; do
+    case $1 in 
+        debug) TYPE=DEBUG
+            ;;
+        release) TYPE=DEBUG
+            ;;
+        rebuild) CMD=rebuild
+            ;;
+        build) CMD=build
+            ;;
+    esac
+
+    shift
+done
+
+echo "CMD: $CMD, TYPE: $TYPE"
+
 if [ "X$CMD" == "X" ]; then
     if [ ! -d "$BUILDDIR" ]; then
         echo "$BUILDDIR doesn't exist. forcing rebuild"
@@ -16,7 +36,7 @@ if [ "X$CMD" == "Xrebuild" ]; then
     mkdir -p "$BUILDDIR"
     (
         cd "$BUILDDIR"
-        cmake "$STARTDIR"
+        cmake "$STARTDIR" -DCMAKE_BUILD_TYPE=$TYPE
         if [ $? -ne 0 ]; then
             echo "cmake failed"
             exit 1

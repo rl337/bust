@@ -12,7 +12,10 @@ namespace png {
         ihdr.filter = 0;
         ihdr.interlace = 0;
 
-        buffer = new uint32_t[width * height];
+        this->buffer = new uint32_t[width * height];
+        for (uint32_t i = 0; i < width * height; i++) {
+            buffer[i] = 0;
+        }
     }
 
     PNG::~PNG() {
@@ -72,10 +75,8 @@ namespace png {
         appendChunk(stream, CHUNK_TYPE_IHDR, reinterpret_cast<uint8_t *>(&this->ihdr), sizeof(IHDRChunk));
         std::stringstream zlibstream;
         this->appendZLibStream(zlibstream, reinterpret_cast<uint8_t *>(&this->buffer), this->ihdr.width * this->ihdr.height * sizeof(uint32_t));
-        /*
         std::string zlibstream_str = zlibstream.str();
-        //appendChunk(stream, CHUNK_TYPE_IDAT, reinterpret_cast<uint8_t *>(const_cast<char *>(zlibstream_str.c_str())), zlibstream_str.length());
-        */
+        appendChunk(stream, CHUNK_TYPE_IDAT, reinterpret_cast<uint8_t *>(const_cast<char *>(zlibstream_str.c_str())), zlibstream_str.length());
         appendChunk(stream, CHUNK_TYPE_IEND, nullptr, 0);
     }
 

@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-namespace math {
+namespace util {
     static CRC32 crc32;
     static Adler32 adler32;
 
@@ -13,7 +13,7 @@ namespace math {
         uint32_t expected;
         Checksum32 *algorithm;
 
-        void execute(MathChecksumsTest *t) {
+        void execute(UtilChecksumsTest *t) {
             size_t len = this->input.length();
             uint8_t *data = reinterpret_cast<uint8_t *>(const_cast<char *>(this->input.c_str()));
 
@@ -50,7 +50,7 @@ namespace math {
         },
     };
 
-    void MathChecksumsTest::run() {
+    void UtilChecksumsTest::run() {
         for (Checksum32TestCase t : cases) {
             t.execute(this);        
         }
