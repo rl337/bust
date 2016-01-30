@@ -23,7 +23,7 @@ namespace util {
         }
     };
 
-    Checksum32TestCase cases[] = {
+    Checksum32TestCase util_checksum_cases[] = {
         {
             "CRC32: Wikipedia CRC example",
             "The quick brown fox jumps over the lazy dog",
@@ -48,10 +48,16 @@ namespace util {
             0x11E60398, 
             &adler32
         },
+        {
+            "Adler32: zero byte test",
+            "",
+            0x01, 
+            &adler32
+        },
     };
 
     void UtilChecksumsTest::run() {
-        for (Checksum32TestCase t : cases) {
+        for (Checksum32TestCase t : util_checksum_cases) {
             t.execute(this);        
         }
     }

@@ -60,6 +60,64 @@ namespace testing {
         return x.str();
     }
 
+    std::string _firstlast(std::string x) {
+        if (x.length() < 15) {
+            return x;
+        }
+
+        std::stringstream result;
+        result << x.substr(0, 5) << " ... " << x.substr(x.length() - 5, 5);
+        return result.str(); 
+    }
+
+    template<typename X> std::string _messageHex(std::string name, std::string mesg, std::string expected, std::string actual) {
+        std::stringstream x;
+
+        char str[5];
+        if (expected.length() != actual.length()) {
+            x << name << ": " << mesg << " Length Mismatch. Expected: " << expected.length();
+            x << " Actual: " << actual.length() << std::endl;
+            x << " Literal Expected:" << std::endl;
+            for (size_t i = 0; i < expected.length(); i++) {
+                sprintf(str, "%02x",  (uint8_t) expected[i]);
+                x << str << " "; 
+            }
+            x << std::endl;
+
+            x << " Literal Actual:" << std::endl;
+            for (size_t i = 0; i < actual.length(); i++) {
+                sprintf(str, "%02x",  (uint8_t) expected[i]);
+                x << str << " ";
+            }
+            x << std::endl;
+
+            return x.str();
+        }
+
+        for (size_t i = 0; i < expected.length(); i++) {
+            if (expected[i] != actual[i]) {
+                x << name << ": " << mesg << " String Mismatch at position " << i << std::endl;
+                x << " Actual: " << actual.length() << std::endl;
+                x << " Literal Expected:" << std::endl;
+                for (size_t i = 0; i < expected.length(); i++) {
+                    sprintf(str, "%02x",  (uint8_t) expected[i]);
+                    x << str << " "; 
+                }
+                x << std::endl;
+
+                x << " Literal Actual:" << std::endl;
+                for (size_t i = 0; i < actual.length(); i++) {
+                    sprintf(str, "%02x",  (uint8_t) actual[i]);
+                    x << str << " ";
+                }
+                x << std::endl;
+                break;
+            }
+        }
+
+        return x.str();
+    }
+
     void Test::assertEqual(std::string mesg, int expected, int actual) {
         if (expected != actual) {
             throw AssertionFail(_message<int>(name, mesg, expected, actual));
@@ -99,6 +157,12 @@ namespace testing {
     void Test::assertEqual(std::string mesg, std::string expected, std::string actual) {
         if (expected != actual) {
             throw AssertionFail(_message<std::string>(name, mesg, expected, actual));
+        }
+    }
+
+    void Test::assertEqualHex(std::string mesg, std::string expected, std::string actual) {
+        if (expected != actual) {
+            throw AssertionFail(_messageHex<std::string>(name, mesg, expected, actual));
         }
     }
 

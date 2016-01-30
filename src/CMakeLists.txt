@@ -23,6 +23,7 @@ add_library(jv_testing SHARED
 
 add_library(jv_util SHARED
     util/checksums.cpp
+    util/zlib.cpp
 )
 
 add_library(jv_math SHARED
@@ -49,6 +50,7 @@ target_link_libraries( test_testing jv_testing )
 
 add_library(test_util SHARED
     tests/util/test_checksums.cpp
+    tests/util/test_zlib.cpp
     tests/util/util_suite.cpp
 )
 target_link_libraries( test_util jv_util jv_testing )

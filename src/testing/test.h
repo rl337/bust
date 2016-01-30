@@ -41,6 +41,7 @@ namespace testing {
             void assertEqual(std::string mesg, double expected, double actual, double error);
             void assertEqual(std::string mesg, double expected, double actual);
             void assertEqual(std::string mesg, std::string expected, std::string actual);
+            void assertEqualHex(std::string mesg, std::string expected, std::string actual);
 
             void assertNotEqual(std::string mesg, int expected, int actual);
             void assertNotEqual(std::string mesg, unsigned expected, unsigned actual);
