@@ -30,9 +30,15 @@ namespace util {
             ZLib() : ZLib(ZLIB_DEFLATE_MAX_BLOCKSIZE) {}
 
             void append(std::ostream &stream);
+            inline std::string str() { return buffer.str(); }
             void write(uint8_t *data, size_t size, bool last);
-            void write(uint8_t *data, size_t size) { write(data, size, false); }
-            void writeLast(uint8_t *data, uint16_t size) { write(data, size, true); }
+            void write(std::string data, bool last);
+
+            inline void write(uint8_t *data, size_t size) { write(data, size, false); }
+            inline void writeLast(uint8_t *data, uint16_t size) { write(data, size, true); }
+
+            inline void write(std::string data) { write(data, false); }
+            inline void writeLast(std::string data) { write(data, true); }
     };
 
     class WriteAfterLastBlock: public std::exception {

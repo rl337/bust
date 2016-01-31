@@ -4,13 +4,13 @@
 namespace png {
 
     PNG::PNG(uint32_t width, uint32_t height) : crc() {
-        ihdr.width = width;
-        ihdr.height = height;
-        ihdr.bitdepth = 8;
-        ihdr.colortype = 6;
-        ihdr.compression = 0;
-        ihdr.filter = 0;
-        ihdr.interlace = 0;
+        this->width = width;
+        this->height = height;
+        this->bitdepth = 8;
+        this->colortype = 6;
+        this->compression = 0;
+        this->filter = 0;
+        this->interlace = 0;
 
         this->buffer = new uint32_t[width * height];
         for (uint32_t i = 0; i < width * height; i++) {
@@ -22,61 +22,78 @@ namespace png {
         delete buffer;
     }
 
-    void PNG::appendZLibStream(std::ostream &stream, uint8_t *data, uint16_t size) {
-        stream.write(reinterpret_cast<char *>(const_cast<uint16_t *>(&ZLIB_HEADER)), sizeof(uint16_t));
-        this->appendRawDeflateData(stream, data, size);
-        uint32_t sum = this->adler.get(data, size);
-        stream.write(reinterpret_cast<char *>(&sum), sizeof(uint32_t));
-    }
-
-    void PNG::appendRawDeflateBlock(std::ostream &stream, uint8_t last, uint8_t *data, uint16_t size) {
-        RawDeflateBlockHeader block;
-        block.last = last;
-        block.size = size;
-        block.invsize = 0xffff ^ size;
-
-        stream.write(reinterpret_cast<char *>(&block), sizeof(RawDeflateBlockHeader));
-        stream.write(reinterpret_cast<char *>(data), size);
-    }
-
-    void PNG::appendRawDeflateData(std::ostream &stream, uint8_t *data, size_t size) {
-        uint16_t chunks = size / DEFLATE_MAX_BLOCKSIZE;
-        if (chunks < 1) {
-            this->appendRawDeflateBlock(stream, 1, data, size);
-            return;
-        } 
-
-        for (uint16_t i = 0; i < chunks-1; i++) {
-            this->appendRawDeflateBlock(stream, 0, data + (DEFLATE_MAX_BLOCKSIZE * i), DEFLATE_MAX_BLOCKSIZE);
+    void PNG::set(uint32_t x, uint32_t y, uint32_t rgba) {
+        if (x > this->width) {
+            throw png_pixel_out_of_bounds;        
+        }
+        if (y > this->height) {
+            throw png_pixel_out_of_bounds;        
         }
 
-        uint16_t rest = size % DEFLATE_MAX_BLOCKSIZE;
-        if (rest > 0) {
-            this->appendRawDeflateBlock(stream, 1, data + (DEFLATE_MAX_BLOCKSIZE * (chunks-1)), rest);
-        }
+        this->buffer[y * this->width + x] = htonl(rgba);
     }
 
     void PNG::appendChunk(std::ostream &stream, uint32_t type, uint8_t *data, size_t size) {
-        uint32_t typecrc = crc.get(0, reinterpret_cast<uint8_t *>(&type), sizeof(uint32_t));
+        uint32_t ntype = htonl(type);
+        uint32_t typecrc = crc.get(0, reinterpret_cast<uint8_t *>(&ntype), sizeof(uint32_t));
         uint32_t finalcrc = crc.get(typecrc, data, size);
+        uint32_t nfinalcrc = htonl(finalcrc);
 
-        stream.write(reinterpret_cast<char *>(&size), sizeof(uint32_t));
-        stream.write(reinterpret_cast<char *>(&type), sizeof(uint32_t));
+        uint32_t nsize = htonl(size);
+        stream.write(reinterpret_cast<char *>(&nsize), sizeof(uint32_t));
+        stream.write(reinterpret_cast<char *>(&ntype), sizeof(uint32_t));
         stream.write(reinterpret_cast<char *>(data), size);
-        stream.write(reinterpret_cast<char *>(&finalcrc), sizeof(uint32_t));
+        stream.write(reinterpret_cast<char *>(&nfinalcrc), sizeof(uint32_t));
+    }
+
+    void PNG::makeIHDRContent(std::ostream &stream) {
+        uint32_t nwidth = htonl(this->width);
+        uint32_t nheight = htonl(this->height);
+
+        stream.write(reinterpret_cast<char *>(&nwidth), sizeof(uint32_t));
+        stream.write(reinterpret_cast<char *>(&nheight), sizeof(uint32_t));
+
+        stream.write(reinterpret_cast<char *>(&this->bitdepth), sizeof(uint8_t));
+        stream.write(reinterpret_cast<char *>(&this->colortype), sizeof(uint8_t));
+        stream.write(reinterpret_cast<char *>(&this->compression), sizeof(uint8_t));
+        stream.write(reinterpret_cast<char *>(&this->filter), sizeof(uint8_t));
+        stream.write(reinterpret_cast<char *>(&this->interlace), sizeof(uint8_t));
     }
 
     void PNG::append(std::ostream &stream) {
 
         // write header
-        stream.write(reinterpret_cast<char *>(const_cast<uint32_t *>(&PNG_HEADER1)), sizeof(uint32_t));
-        stream.write(reinterpret_cast<char *>(const_cast<uint32_t *>(&PNG_HEADER2)), sizeof(uint32_t));
+        uint32_t nheader1 = htonl(PNG_HEADER1);
+        stream.write(reinterpret_cast<char *>(const_cast<uint32_t *>(&nheader1)), sizeof(uint32_t));
+        uint32_t nheader2 = htonl(PNG_HEADER2);
+        stream.write(reinterpret_cast<char *>(const_cast<uint32_t *>(&nheader2)), sizeof(uint32_t));
 
-        appendChunk(stream, CHUNK_TYPE_IHDR, reinterpret_cast<uint8_t *>(&this->ihdr), sizeof(IHDRChunk));
-        std::stringstream zlibstream;
-        this->appendZLibStream(zlibstream, reinterpret_cast<uint8_t *>(&this->buffer), this->ihdr.width * this->ihdr.height * sizeof(uint32_t));
-        std::string zlibstream_str = zlibstream.str();
-        appendChunk(stream, CHUNK_TYPE_IDAT, reinterpret_cast<uint8_t *>(const_cast<char *>(zlibstream_str.c_str())), zlibstream_str.length());
+        std::stringstream tmpstream;
+        this->makeIHDRContent(tmpstream);
+        std::string ihdrstr = tmpstream.str();
+        char *ihdrcstr = const_cast<char *>(ihdrstr.c_str());
+
+        appendChunk(stream, CHUNK_TYPE_IHDR, reinterpret_cast<uint8_t *>(ihdrcstr), ihdrstr.length());
+
+        tmpstream.str("");
+        tmpstream.clear();
+
+        util::ZLib zlib;
+        uint8_t n = '\0';
+        for (size_t line = 0; line < height-1; line++) {
+            tmpstream.write(reinterpret_cast<char *>(&n), sizeof(uint8_t));
+            tmpstream.write(reinterpret_cast<char *>(this->buffer + line * width * sizeof(uint32_t)), this->width * sizeof(uint32_t));
+        }
+        tmpstream.write(reinterpret_cast<char *>(&n), sizeof(uint8_t));
+        tmpstream.write(reinterpret_cast<char *>(this->buffer + (height-1) * width * sizeof(uint32_t)), this->width * sizeof(uint32_t));
+        std::string pixeldata = tmpstream.str();
+        zlib.writeLast(pixeldata);
+
+        std::stringstream deflated;
+        zlib.append(deflated);
+        std::string zlibstr = deflated.str();
+
+        appendChunk(stream, CHUNK_TYPE_IDAT, reinterpret_cast<uint8_t *>(const_cast<char *>(zlibstr.c_str())), zlibstr.length());
         appendChunk(stream, CHUNK_TYPE_IEND, nullptr, 0);
     }
 

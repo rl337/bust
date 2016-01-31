@@ -99,16 +99,16 @@ namespace testing {
                 x << name << ": " << mesg << " String Mismatch at position " << i << std::endl;
                 x << " Actual: " << actual.length() << std::endl;
                 x << " Literal Expected:" << std::endl;
-                for (size_t i = 0; i < expected.length(); i++) {
-                    sprintf(str, "%02x",  (uint8_t) expected[i]);
-                    x << str << " "; 
+                for (size_t j = 0; j < expected.length(); j++) {
+                    sprintf(str, "%02x",  (uint8_t) expected[j]);
+                    x << str << (i == j ? "]" : (i-1 == j ? "[" : " ")); 
                 }
                 x << std::endl;
 
                 x << " Literal Actual:" << std::endl;
-                for (size_t i = 0; i < actual.length(); i++) {
-                    sprintf(str, "%02x",  (uint8_t) actual[i]);
-                    x << str << " ";
+                for (size_t j = 0; j < actual.length(); j++) {
+                    sprintf(str, "%02x",  (uint8_t) actual[j]);
+                    x << str << (i == j ? "]" : (i-1 == j ? "[" : " ")); 
                 }
                 x << std::endl;
                 break;

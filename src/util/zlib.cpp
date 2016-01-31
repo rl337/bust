@@ -57,4 +57,9 @@ namespace util {
             this->appendRawDeflateBlock(last, data + (this->blocksize * chunks), rest);
         }
     }
+
+    void ZLib::write(std::string data, bool last) {
+        char *data_cstr = const_cast<char *>(data.c_str());
+        this->write(reinterpret_cast<uint8_t *>(data_cstr), data.length(), last);
+    }
 }

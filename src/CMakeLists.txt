@@ -65,6 +65,15 @@ target_link_libraries( test_math
     jv_math
 )
 
+add_library(test_png SHARED
+    tests/png/png_suite.cpp
+    tests/png/test_png.cpp
+)
+target_link_libraries( test_png
+    jv_testing
+    jv_png
+)
+
 add_library(test_svg SHARED
     tests/svg/test_svg.cpp
     tests/svg/test_color.cpp
@@ -85,6 +94,7 @@ target_link_libraries( jv_tests
     test_math
     test_svg
     test_util
+    test_png
 )
 
 add_executable(jv_colorbars
