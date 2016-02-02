@@ -32,18 +32,18 @@ namespace png {
     class RGBPNG3x1 : public PNG {
         public:
             RGBPNG3x1() : PNG(3, 1) {
-                set(0, 0, 0xFF0000FF);
-                set(1, 0, 0x00FF00FF);
-                set(2, 0, 0x0000FFFF);
+                set(0, 0, (uint32_t) 0xFF0000FF);
+                set(1, 0, (uint32_t) 0x00FF00FF);
+                set(2, 0, (uint32_t) 0x0000FFFF);
             }
     } rgb_png_3x1;
 
     class RGBPNG1x3 : public PNG {
         public:
             RGBPNG1x3() : PNG(1, 3) {
-                set(0, 0, 0xFF0000FF);
-                set(0, 1, 0x00FF00FF);
-                set(0, 2, 0x0000FFFF);
+                set(0, 0, (uint32_t) 0xFF0000FF);
+                set(0, 1, (uint32_t) 0x00FF00FF);
+                set(0, 2, (uint32_t) 0x0000FFFF);
             }
     } rgb_png_1x3;
 

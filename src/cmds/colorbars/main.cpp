@@ -2,8 +2,8 @@
 #include <fstream>
 
 int main (int argc, char *argv[]) {
-    uint32_t width = 3;
-    uint32_t height = 3;
+    uint32_t width = 1024;
+    uint32_t height = 768;
     png::PNG png(width, height);
 
     for (uint32_t x = 0; x < width; x++) {
@@ -19,8 +19,6 @@ int main (int argc, char *argv[]) {
             }
         }
     }
-
-//    png.set(0, 0, 0x3F7FFFFF);
     
     std::ofstream out("colorbars.png", std::fstream::out);
     png.append(out);

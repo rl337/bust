@@ -42,7 +42,9 @@ namespace png {
         uint32_t nsize = htonl(size);
         stream.write(reinterpret_cast<char *>(&nsize), sizeof(uint32_t));
         stream.write(reinterpret_cast<char *>(&ntype), sizeof(uint32_t));
-        stream.write(reinterpret_cast<char *>(data), size);
+        if (size > 0) {
+            stream.write(reinterpret_cast<char *>(data), size);
+        }
         stream.write(reinterpret_cast<char *>(&nfinalcrc), sizeof(uint32_t));
     }
 
@@ -82,10 +84,10 @@ namespace png {
         uint8_t n = '\0';
         for (size_t line = 0; line < height-1; line++) {
             tmpstream.write(reinterpret_cast<char *>(&n), sizeof(uint8_t));
-            tmpstream.write(reinterpret_cast<char *>(this->buffer + line * width * sizeof(uint32_t)), this->width * sizeof(uint32_t));
+            tmpstream.write(reinterpret_cast<char *>(&this->buffer[line * width]), this->width * sizeof(uint32_t));
         }
         tmpstream.write(reinterpret_cast<char *>(&n), sizeof(uint8_t));
-        tmpstream.write(reinterpret_cast<char *>(this->buffer + (height-1) * width * sizeof(uint32_t)), this->width * sizeof(uint32_t));
+        tmpstream.write(reinterpret_cast<char *>(&this->buffer[(height-1) * width]), this->width * sizeof(uint32_t));
         std::string pixeldata = tmpstream.str();
         zlib.writeLast(pixeldata);
 
