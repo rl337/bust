@@ -3,12 +3,12 @@
 #include "style.h"
 #include "color.h"
 
-namespace svg {
+namespace util {
 
-    class SVGColorTest : public testing::Test {
+    class UtilColorTest : public testing::Test {
 
         public:
-            SVGColorTest() : testing::Test("SVGColorTest") {}
+            UtilColorTest() : testing::Test("UtilColorTest") {}
 
             void run();
             void init(){};

@@ -24,6 +24,7 @@ add_library(jv_testing SHARED
 add_library(jv_util SHARED
     util/checksums.cpp
     util/zlib.cpp
+    util/color.cpp
 )
 
 add_library(jv_math SHARED
@@ -38,7 +39,6 @@ target_link_libraries( jv_png jv_util )
 
 add_library(jv_svg SHARED
     svg/svg.cpp
-    svg/color.cpp
     svg/style.cpp
 )
 
@@ -51,6 +51,7 @@ target_link_libraries( test_testing jv_testing )
 add_library(test_util SHARED
     tests/util/test_checksums.cpp
     tests/util/test_zlib.cpp
+    tests/util/test_color.cpp
     tests/util/util_suite.cpp
 )
 target_link_libraries( test_util jv_util jv_testing )
@@ -76,7 +77,6 @@ target_link_libraries( test_png
 
 add_library(test_svg SHARED
     tests/svg/test_svg.cpp
-    tests/svg/test_color.cpp
     tests/svg/svg_suite.cpp
 )
 target_link_libraries( test_svg

@@ -12,22 +12,22 @@ namespace svg {
     struct Style {
         private:
             std::string name;
-            Color fill;
-            Color stroke;
+            util::Color fill;
+            util::Color stroke;
             uint8_t stroke_width;
 
         public:
-            Style(std::string n, Color f, Color s, uint8_t sw) : name(n), fill(f), stroke(s), stroke_width(sw) {};
-            Style(std::string n, Color f) : name(n), fill(f), stroke(colors::None), stroke_width(0) {};
+            Style(std::string n, util::Color f, util::Color s, uint8_t sw) : name(n), fill(f), stroke(s), stroke_width(sw) {};
+            Style(std::string n, util::Color f) : name(n), fill(f), stroke(util::colors::None), stroke_width(0) {};
 
             inline std::string getName() const { return this->name; }
-            inline Color getFill() const { return this->fill; }
-            inline Color getStroke() const { return this->stroke; }
+            inline util::Color getFill() const { return this->fill; }
+            inline util::Color getStroke() const { return this->stroke; }
             inline std::uint8_t getStrokeWidth() const { return this->stroke_width; }
     };
 
     namespace styles {
-        static const Style Default("default", colors::None, colors::Black, 2);
+        static const Style Default("default", util::colors::None, util::colors::Black, 2);
     }
 
 }

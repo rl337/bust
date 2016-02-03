@@ -1,5 +1,5 @@
 #include "color.h"
 
-namespace svg {
+namespace util {
 
 }
