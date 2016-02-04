@@ -1,4 +1,5 @@
 #include "png.h"
+#include "color.h"
 #include <fstream>
 
 int main (int argc, char *argv[]) {
@@ -8,15 +9,52 @@ int main (int argc, char *argv[]) {
 
     for (uint32_t x = 0; x < width; x++) {
         for (uint32_t y = 0; y < height; y++) {
-            if ( x * 3 / width == 0) {
-                png.set(x, y, 0xFF0000FF);
+            uint32_t color;
+
+            if (y < height * 25 / 40) {
+                switch (x * 7 / width) {
+                    case 0: color = util::vga16::Silver.getValue(); break;
+                    case 1: color = util::vga16::Yellow.getValue(); break;
+                    case 2: color = util::vga16::Aqua.getValue(); break;
+                    case 3: color = util::vga16::Lime.getValue(); break;
+                    case 4: color = util::vga16::Fuchsia.getValue(); break;
+                    case 5: color = util::vga16::Red.getValue(); break;
+                    case 6: color = util::vga16::Blue.getValue(); break;
+                }
+            } else if (y >= height * 25 / 40 && y < height * 29/40) {
+                switch (x * 7 / width) {
+                    case 0: color = util::vga16::Blue.getValue(); break;
+                    case 1: color = util::vga16::Black.getValue(); break;
+                    case 2: color = util::vga16::Fuchsia.getValue(); break;
+                    case 3: color = util::vga16::Black.getValue(); break;
+                    case 4: color = util::vga16::Aqua.getValue(); break;
+                    case 5: color = util::vga16::Black.getValue(); break;
+                    case 6: color = util::vga16::Silver.getValue(); break;
+                }
+            } else {
+                switch (x * 18 / width) {
+                    case 0: color = util::vga16::Navy.getValue(); break;
+                    case 1: color = util::vga16::Navy.getValue(); break;
+                    case 2: color = util::vga16::Navy.getValue(); break;
+                    case 3: color = util::vga16::White.getValue(); break;
+                    case 4: color = util::vga16::White.getValue(); break;
+                    case 5: color = util::vga16::White.getValue(); break;
+                    case 6: color = util::vga16::Purple.getValue(); break;
+                    case 7: color = util::vga16::Purple.getValue(); break;
+                    case 8: color = util::vga16::Purple.getValue(); break;
+                    case 9: color = util::vga16::Black.getValue(); break;
+                    case 10: color = util::vga16::Black.getValue(); break;
+                    case 11: color = util::vga16::Black.getValue(); break;
+                    case 12: color = util::vga16::White.getValue(); break;
+                    case 13: color = util::vga16::Silver.getValue(); break;
+                    case 14: color = util::vga16::Gray.getValue(); break;
+                    case 15: color = util::vga16::Black.getValue(); break;
+                    case 16: color = util::vga16::Black.getValue(); break;
+                    case 17: color = util::vga16::Black.getValue(); break;
+                }
             }
-            if ( x * 3 / width == 1) {
-                png.set(x, y, 0x00FF00FF);
-            }
-            if ( x * 3 / width == 2) {
-                png.set(x, y, 0x0000FFFF);
-            }
+
+            png.set(x, y, color);
         }
     }
     

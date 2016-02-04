@@ -28,6 +28,32 @@ namespace util {
             inline uint32_t getValue() const { return this->value; }
     };
 
+    namespace vga16 {
+        static const Color Black("black", 0x000000FF);
+        static const Color Gray("gray", 0x808080FF);
+
+        static const Color Maroon("maroon", 0x800000FF);
+        static const Color Red("red", 0xFF0000FF);
+
+        static const Color Green("green", 0x008000FF);
+        static const Color Lime("lime", 0x00FF00FF);
+
+        static const Color Olive("olive", 0x008000FF);
+        static const Color Yellow("lime", 0xFFFF00FF);
+
+        static const Color Navy("navy", 0x000080FF);
+        static const Color Blue("blue", 0x0000FFFF);
+
+        static const Color Purple("purple", 0x800080FF);
+        static const Color Fuchsia("fuchsia", 0xFF00FFFF);
+
+        static const Color Teal("teal", 0x008080FF);
+        static const Color Aqua("aqua", 0x00FFFFFF);
+
+        static const Color Silver("silver", 0xC0C0C0FF);
+        static const Color White("white", 0xFFFFFFFF);
+    }
+
     namespace colors {
         static const Color None("none", 0x00000000);
         static const Color AliceBlue("aliceblue", 0xF0F8FFFF);
