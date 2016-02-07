@@ -10,12 +10,12 @@ namespace math {
     class Vector {
         private:
             double *content;
-            std::size_t count;
+            std::size_t dimensions;
 
         public:
-            Vector(std::size_t length);
-            Vector(double *data, std::size_t length);
-            Vector(double *data, std::size_t offset, std::size_t length);
+            Vector(std::size_t dimensions);
+            Vector(double *data, std::size_t dimensions);
+            Vector(double *data, std::size_t offset, std::size_t dimensions);
             ~Vector();
 
             void                  set(std::size_t index, double value);
@@ -24,9 +24,10 @@ namespace math {
             inline void           clear() { this->clear(0.0); }
             void                  clear(double value);
 
-            inline std::size_t    getSize() { return this->count; }
+            inline std::size_t    getDimensions() { return this->dimensions; }
+            double                getLength();
 
-            void                  translate(Vector *b);
+            void                  translate(Vector &b);
             void                  scale(double s);
     };
 
