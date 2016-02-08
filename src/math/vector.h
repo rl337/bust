@@ -4,6 +4,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <exception>
+#include <cmath>
 
 namespace math {
     
@@ -14,6 +15,7 @@ namespace math {
 
         public:
             Vector(std::size_t dimensions);
+            Vector(Vector &v) : Vector(v.content, v.dimensions) {};
             Vector(double *data, std::size_t dimensions);
             Vector(double *data, std::size_t offset, std::size_t dimensions);
             ~Vector();
@@ -25,7 +27,8 @@ namespace math {
             void                  clear(double value);
 
             inline std::size_t    getDimensions() { return this->dimensions; }
-            double                getLength();
+            double                getMagnitude();
+            double                getDistance(Vector &b);
 
             void                  translate(Vector &b);
             void                  scale(double s);

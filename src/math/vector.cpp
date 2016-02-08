@@ -46,6 +46,23 @@ namespace math {
         this->content[index] = v;
     }
 
+    double Vector::getMagnitude() {
+        double sumsq = 0;
+        for (int i = 0; i < this->dimensions; i++) {
+            sumsq += std::pow(this->get(i), 2);
+        }
+        return std::abs(sqrt(sumsq));
+    }
+
+    double Vector::getDistance(Vector &b) {
+        Vector r(b);
+        Vector s(*this);
+        
+        r.scale(-1.0);
+        s.translate(r);
+        return s.getMagnitude();
+    }
+
     void Vector::scale(double s) {
         for (std::size_t i = 0; i < this->dimensions; i++) {
             this->content[i] *= s;
