@@ -20,7 +20,6 @@ namespace math {
     }
     
     void Vector::translate(Vector &b) {
-
         if (b.dimensions != this->dimensions) {
             throw vector_size_mismatch_error;
         }
@@ -34,7 +33,6 @@ namespace math {
         if (index >= this->dimensions) {
             throw vector_bounds_error;
         }
-
         return this->content[index];
     }
 
@@ -42,7 +40,6 @@ namespace math {
         if (index >= this->dimensions) {
             throw vector_bounds_error;
         }
-
         this->content[index] = v;
     }
 
@@ -67,6 +64,15 @@ namespace math {
         for (std::size_t i = 0; i < this->dimensions; i++) {
             this->content[i] *= s;
         }
+    }
+
+    void Vector::scaleTo(double s) {
+        double m = this->getMagnitude();
+        double ratio = 0.0;
+        if (m != 0.0) {
+            ratio = s / m;
+        }
+        this->scale(ratio);
     }
 
     void Vector::clear(double s) {

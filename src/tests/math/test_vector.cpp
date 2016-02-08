@@ -117,6 +117,13 @@ namespace math {
               t.assertEqual("calculating distance over multiple axis", c.v.getMagnitude()/2, c.v.getDistance(w), 1.0e-6);
           }
        },
+       { "test scaleTo()",
+          { (double[3]) { 5.0, 7.0, 11.0 }, (std::size_t) 3},
+          [](testing::Test &t, MathVectorScalarTestCase &c) { 
+              c.v.scaleTo(5.0);
+              t.assertEqual("scale to should result in 5.0", 5.0, c.v.getMagnitude(), 1.0e-6);
+          }
+       },
     };
 
     void MathVectorTest::run() {

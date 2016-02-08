@@ -32,6 +32,7 @@ namespace math {
 
             void                  translate(Vector &b);
             void                  scale(double s);
+            void                  scaleTo(double s);
     };
 
     class VectorSizeMismatch: public std::exception {
