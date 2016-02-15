@@ -1,5 +1,5 @@
-#ifndef __JV_SVG_H__
-#define __JV_SVG_H__
+#ifndef __BUST_SVG_SVG_H__
+#define __BUST_SVG_SVG_H__
 
 #include <cstddef>
 #include <string>
@@ -8,7 +8,7 @@
 
 #include "style.h"
 
-namespace svg {
+namespace bust::svg {
 
 
     class Shape {

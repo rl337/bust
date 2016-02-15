@@ -45,7 +45,7 @@ if [ "X$CMD" == "Xrebuild" ]; then
 fi
 
 (
-    cd build
+    cd "$BUILDDIR"
     make
 )
 

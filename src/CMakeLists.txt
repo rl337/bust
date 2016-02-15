@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 2.8)
 
-project (jarvis)
+project (bust)
 
-set (jarvis_VERSION_MAJOR 0)
-set (jarvis_VERSION_MINOR 1)
+set (bust_VERSION_MAJOR 0)
+set (bust_VERSION_MINOR 1)
 set (CMAKE_MACOSX_RPATH 1)
 
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11")
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wc++1z-extensions")
 
 include_directories("${PROJECT_SOURCE_DIR}/testing")
 include_directories("${PROJECT_SOURCE_DIR}/math")
@@ -14,30 +14,30 @@ include_directories("${PROJECT_SOURCE_DIR}/svg")
 include_directories("${PROJECT_SOURCE_DIR}/png")
 include_directories("${PROJECT_SOURCE_DIR}/util")
 
-add_library(jv_testing SHARED
+add_library(bust_testing SHARED
     testing/runner.cpp
     testing/suite.cpp
     testing/test.cpp
     testing/report.cpp
 )
 
-add_library(jv_util SHARED
+add_library(bust_util SHARED
     util/checksums.cpp
     util/zlib.cpp
     util/color.cpp
 )
 
-add_library(jv_math SHARED
+add_library(bust_math SHARED
     math/bitsets.cpp
     math/vector.cpp
 )
 
-add_library(jv_png SHARED
+add_library(bust_png SHARED
     png/png.cpp
 )
-target_link_libraries( jv_png jv_util )
+target_link_libraries( bust_png bust_util )
 
-add_library(jv_svg SHARED
+add_library(bust_svg SHARED
     svg/svg.cpp
     svg/style.cpp
 )
@@ -46,7 +46,7 @@ add_library(test_testing SHARED
     tests/testing/test_testing.cpp
     tests/testing/testing_suite.cpp
 )
-target_link_libraries( test_testing jv_testing )
+target_link_libraries( test_testing bust_testing )
 
 add_library(test_util SHARED
     tests/util/test_checksums.cpp
@@ -54,7 +54,7 @@ add_library(test_util SHARED
     tests/util/test_color.cpp
     tests/util/util_suite.cpp
 )
-target_link_libraries( test_util jv_util jv_testing )
+target_link_libraries( test_util bust_util bust_testing )
 
 add_library(test_math SHARED
     tests/math/test_bitsets.cpp
@@ -62,8 +62,8 @@ add_library(test_math SHARED
     tests/math/math_suite.cpp
 )
 target_link_libraries( test_math
-    jv_testing
-    jv_math
+    bust_testing
+    bust_math
 )
 
 add_library(test_png SHARED
@@ -71,8 +71,8 @@ add_library(test_png SHARED
     tests/png/test_png.cpp
 )
 target_link_libraries( test_png
-    jv_testing
-    jv_png
+    bust_testing
+    bust_png
 )
 
 add_library(test_svg SHARED
@@ -80,16 +80,16 @@ add_library(test_svg SHARED
     tests/svg/svg_suite.cpp
 )
 target_link_libraries( test_svg
-    jv_testing
-    jv_svg
-    jv_png
+    bust_testing
+    bust_svg
+    bust_png
 )
 
-add_executable(jv_tests
+add_executable(bust_tests
     tests/main.cpp
 )
 
-target_link_libraries( jv_tests
+target_link_libraries( bust_tests
     test_testing
     test_math
     test_svg
@@ -97,11 +97,11 @@ target_link_libraries( jv_tests
     test_png
 )
 
-add_executable(jv_colorbars
+add_executable(bust_colorbars
     cmds/colorbars/main.cpp
 )
 
-target_link_libraries( jv_colorbars
-    jv_math
-    jv_png
+target_link_libraries( bust_colorbars
+    bust_math
+    bust_png
 )

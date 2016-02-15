@@ -1,6 +1,6 @@
 #include "checksums.h"
 
-namespace util {
+namespace bust::util {
 
     CRC32::CRC32() {
         table = new uint32_t[256];

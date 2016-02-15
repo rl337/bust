@@ -1,11 +1,11 @@
 #include "test.h"
 
-namespace math {
+namespace bust::math {
 
-    class MathVectorTest : public testing::Test {
+    class MathVectorTest : public bust::testing::Test {
 
         public:
-            MathVectorTest() : testing::Test("MathVectorTest") {}
+            MathVectorTest() : bust::testing::Test("MathVectorTest") {}
 
             void run();
             void init(){};

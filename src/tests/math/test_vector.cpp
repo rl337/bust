@@ -1,7 +1,7 @@
 #include "test_vector.h"
 #include "vector.h"
 
-namespace math {
+namespace bust::math {
 
     struct MathVectorScalarTestCase {
         std::string name;
@@ -69,7 +69,7 @@ namespace math {
               try {
                   c.v.get((std::size_t) 10); 
                   t.fail("Expected vector_bounds_error on Vector::get but execution continued");
-              } catch (math::VectorBoundsException &e) {
+              } catch (bust::math::VectorBoundsException &e) {
                   // we pass if we get here
               } catch (std::exception &e) {
                   t.fail("Expected vector_bounds_error on Vector::get but got other exception");
@@ -82,7 +82,7 @@ namespace math {
               try {
                   c.v.set((std::size_t) 10, 5.0); 
                   t.fail("Expected vector_bounds_error on Vector::set but execution continued");
-              } catch (math::VectorBoundsException &e) {
+              } catch (bust::math::VectorBoundsException &e) {
                   // we pass if we get here
               } catch (std::exception &e) {
                   t.fail("Expected vector_bounds_error on Vector::set but got other exception");

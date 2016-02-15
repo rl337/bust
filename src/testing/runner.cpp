@@ -1,6 +1,6 @@
 #include "runner.h"
     
-namespace testing {
+namespace bust::testing {
 
     Runner::Runner() { }
     

@@ -1,7 +1,6 @@
 #include "suite.h"
-#include <string>
 
-namespace testing {
+namespace bust::testing {
 
 Suite::Suite(std::string name, bool autodelete) : name(name), autodelete(autodelete) { }
 Suite::Suite(std::string name) : name(name), autodelete(false) { }

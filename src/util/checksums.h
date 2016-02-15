@@ -3,7 +3,7 @@
 
 #include <cstdint>
 
-namespace util {
+namespace bust::util {
 
     class Checksum32 {
         public:

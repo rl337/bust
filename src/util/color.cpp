@@ -1,5 +1,5 @@
 #include "color.h"
 
-namespace util {
+namespace bust::util {
 
 }

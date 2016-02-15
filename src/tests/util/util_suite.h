@@ -1,6 +1,6 @@
 #include "suite.h"
 
-namespace util {
+namespace bust::util {
 
     class UtilSuite : public testing::Suite {
         public:

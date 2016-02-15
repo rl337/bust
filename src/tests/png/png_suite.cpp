@@ -2,9 +2,9 @@
 
 #include "test_png.h"
 
-namespace png {
+namespace bust::png {
 
-    PNGSuite::PNGSuite() : Suite("PNGSuite", true) {
+    PNGSuite::PNGSuite() : bust::testing::Suite("PNGSuite", true) {
         this->add(new PNGPNGTest());
     }
 }

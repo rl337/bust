@@ -3,7 +3,7 @@
 #include "style.h"
 #include "color.h"
 
-namespace util {
+namespace bust::util {
 
     class UtilColorTest : public testing::Test {
 

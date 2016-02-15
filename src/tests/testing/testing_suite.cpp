@@ -2,9 +2,9 @@
 
 #include "test_testing.h"
 
-namespace testing {
+namespace bust::testing {
 
-    TestingSuite::TestingSuite() : Suite("TestingSuite", true) {
+    TestingSuite::TestingSuite() : bust::testing::Suite("TestingSuite", true) {
         this->add(new TestingStatusTest());
     }
 

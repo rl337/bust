@@ -1,6 +1,6 @@
 #include "bitsets.h"
 
-namespace math {
+namespace bust::math {
     
     std::size_t BitSet::getCount() {
         return this->count;

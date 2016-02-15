@@ -1,11 +1,10 @@
 #include "test_bitsets.h"
-#include "bitsets.h"
 
-namespace math {
+namespace bust::math {
 
     void MathBitSetsTest::run() {
 
-        math::BitSet b;
+        bust::math::BitSet b;
 
         this->assertEqual("Bitset should start empty", (uint32_t) 0, (uint32_t) b.get());
 
@@ -31,7 +30,7 @@ namespace math {
         this->assertEqual("set reset value to 0", (uint32_t) 0, (uint32_t) b.get());
 
 
-        math::BitSet c;
+        bust::math::BitSet c;
         c.set(1 + 16 + 32);
         b.set(4 + 16 + 64);
 

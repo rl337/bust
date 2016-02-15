@@ -1,8 +1,8 @@
 #include "suite.h"
 
-namespace svg {
+namespace bust::svg {
 
-    class SVGSuite : public testing::Suite {
+    class SVGSuite : public bust::testing::Suite {
         public:
             SVGSuite();
     };

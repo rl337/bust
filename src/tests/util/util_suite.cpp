@@ -4,7 +4,7 @@
 #include "test_zlib.h"
 #include "test_color.h"
 
-namespace util {
+namespace bust::util {
 
     UtilSuite::UtilSuite() : Suite("UtilSuite", true) {
         this->add(new UtilChecksumsTest());

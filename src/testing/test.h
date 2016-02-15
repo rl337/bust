@@ -1,12 +1,12 @@
-#ifndef __JV_TEST_H__
-#define __JV_TEST_H__
+#ifndef __BUST_TESTING_TEST_H__
+#define __BUST_TESTING_TEST_H__
 
 #include <string>
 #include <iostream>
 #include <sstream>
 #include <exception>
 
-namespace testing {
+namespace bust::testing {
 
     enum TestStatus { None, Pass, Fail, Error, Abort, Skip };
 

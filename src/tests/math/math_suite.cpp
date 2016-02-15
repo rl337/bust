@@ -3,7 +3,7 @@
 #include "test_bitsets.h"
 #include "test_vector.h"
 
-namespace math {
+namespace bust::math {
 
     MathSuite::MathSuite() : Suite("MathSuite", true) {
         this->add(new MathBitSetsTest());

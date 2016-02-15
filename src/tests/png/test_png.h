@@ -1,11 +1,11 @@
 #include "test.h"
 
-namespace png {
+namespace bust::png {
 
-    class PNGPNGTest : public testing::Test {
+    class PNGPNGTest : public bust::testing::Test {
 
         public:
-            PNGPNGTest() : testing::Test("PNGPNGTest") {}
+            PNGPNGTest() : bust::testing::Test("PNGPNGTest") {}
 
             void run();
             void init(){};

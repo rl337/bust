@@ -1,6 +1,6 @@
 #include "vector.h"
 
-namespace math {
+namespace bust::math {
 
     Vector::Vector(std::size_t dimensions) : content(new double[dimensions]), dimensions(dimensions) {
         this->clear();

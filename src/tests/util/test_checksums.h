@@ -1,11 +1,11 @@
 #include "test.h"
 
-namespace util {
+namespace bust::util {
 
-    class UtilChecksumsTest : public testing::Test {
+    class UtilChecksumsTest : public bust::testing::Test {
 
         public:
-            UtilChecksumsTest() : testing::Test("UtilChecksumsTest") {}
+            UtilChecksumsTest() : bust::testing::Test("UtilChecksumsTest") {}
 
             void run();
             void init(){};

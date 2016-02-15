@@ -1,7 +1,7 @@
 #include "test_svg.h"
 #include <sstream>
 
-namespace svg {
+namespace bust::svg {
 
     struct TestData {
         Shape *s;

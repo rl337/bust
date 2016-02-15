@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-namespace png {
+namespace bust::png {
 
     struct PNGTestCase {
         std::string name;

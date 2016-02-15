@@ -1,9 +1,9 @@
 #include <iostream>
 #include "report.h"
 
-namespace testing {
+namespace bust::testing {
 
-    void StdoutReport::report(Suite *s, Test *t) {
+    void StdoutReport::report(bust::testing::Suite *s, Test *t) {
         if (t == NULL) {
             std::cout << "TEST WAS NULL" << std::endl;
             return;

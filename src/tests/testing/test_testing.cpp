@@ -1,6 +1,6 @@
 #include "test_testing.h"
 
-namespace testing {
+namespace bust::testing {
 
 typedef struct {
    std::string name;

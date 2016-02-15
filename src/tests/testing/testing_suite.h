@@ -1,8 +1,8 @@
 #include "suite.h"
 
-namespace testing {
+namespace bust::testing {
 
-    class TestingSuite : public testing::Suite {
+    class TestingSuite : public bust::testing::Suite {
         public:
             TestingSuite();
     };

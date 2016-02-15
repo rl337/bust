@@ -10,21 +10,21 @@
 
 int main (int argc, char *argv[]) {
 
-     testing::TestingSuite testingSuite;
-     math::MathSuite mathSuite;
-     svg::SVGSuite svgSuite;
-     util::UtilSuite utilSuite;
-     png::PNGSuite pngSuite;
+     bust::testing::TestingSuite testingSuite;
+     bust::math::MathSuite mathSuite;
+     bust::svg::SVGSuite svgSuite;
+     bust::util::UtilSuite utilSuite;
+     bust::png::PNGSuite pngSuite;
 
-     testing::Runner runner;
+     bust::testing::Runner runner;
      runner.add(&testingSuite);
      runner.add(&mathSuite);
      runner.add(&svgSuite);
      runner.add(&utilSuite);
      runner.add(&pngSuite);
 
-     testing::StdoutReport *report = new testing::StdoutReport();
-     runner.add(report);
+     bust::testing::StdoutReport report;
+     runner.add(&report);
 
      runner.run();
 

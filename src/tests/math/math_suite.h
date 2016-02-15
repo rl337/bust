@@ -1,8 +1,8 @@
 #include "suite.h"
 
-namespace math {
+namespace bust::math {
 
-    class MathSuite : public testing::Suite {
+    class MathSuite : public bust::testing::Suite {
         public:
             MathSuite();
     };

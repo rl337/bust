@@ -1,8 +1,8 @@
 #include "suite.h"
 
-namespace png {
+namespace bust::png {
 
-    class PNGSuite : public testing::Suite {
+    class PNGSuite : public bust::testing::Suite {
         public:
             PNGSuite();
     };

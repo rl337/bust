@@ -1,7 +1,7 @@
 
 #include "zlib.h"
 
-namespace util {
+namespace bust::util {
 
     void ZLib::append(std::ostream &stream) {
         uint16_t header = htons(ZLIB_HEADER);

@@ -1,10 +1,10 @@
-#ifndef __JV_BITSETS_H__
-#define __JV_BITSETS_H__
+#ifndef __BUST_MATH_BITSETS_H__
+#define __BUST_MATH_BITSETS_H__
 
 #include <cstddef>
 #include <cstdint>
 
-namespace math {
+namespace bust::math {
     
     class BitSet {
         private:

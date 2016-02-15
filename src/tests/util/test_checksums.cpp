@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-namespace util {
+namespace bust::util {
     static CRC32 crc32;
     static Adler32 adler32;
 

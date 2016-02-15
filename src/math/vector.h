@@ -1,12 +1,12 @@
-#ifndef __JV_BITSETS_H__
-#define __JV_BITSETS_H__
+#ifndef __BUST_MATH_VECTOR_H__
+#define __BUST_MATH_VECTOR_H__
 
 #include <cstddef>
 #include <cstdint>
 #include <exception>
 #include <cmath>
 
-namespace math {
+namespace bust::math {
     
     class Vector {
         private:

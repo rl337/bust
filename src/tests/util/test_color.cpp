@@ -1,6 +1,6 @@
 #include "test_color.h"
 
-namespace util {
+namespace bust::util {
 
     void UtilColorTest::run() {
         this->assertEqual("Colors should work", "blue", colors::Blue.getName());

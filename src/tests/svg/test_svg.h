@@ -4,9 +4,9 @@
 #include "color.h"
 #include "svg.h"
 
-namespace svg {
+namespace bust::svg {
 
-    class SVGSVGTest : public testing::Test {
+    class SVGSVGTest : public bust::testing::Test {
 
         public:
             SVGSVGTest() : testing::Test("SVGSVGTest") {}

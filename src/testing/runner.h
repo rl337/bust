@@ -1,11 +1,11 @@
-#ifndef __JV_TESTING_RUNNER_H__
-#define __JV_TESTING_RUNNER_H__
+#ifndef __BUST_TESTING_RUNNER_H__
+#define __BUST_TESTING_RUNNER_H__
 
 #include "test.h"
 #include "report.h"
 #include "suite.h"
 
-namespace testing {
+namespace bust::testing {
 
     class Runner {
             std::vector<Suite *> suites;

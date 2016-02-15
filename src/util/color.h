@@ -4,7 +4,7 @@
 #include <cstddef>
 #include <string>
 
-namespace util {
+namespace bust::util {
 
     struct Color {
         private:

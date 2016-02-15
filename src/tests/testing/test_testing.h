@@ -3,19 +3,19 @@
 #include "suite.h"
 #include "test.h"
 
-namespace testing {
+namespace bust::testing {
 
-class TestingStatusTest : public Test {
+class TestingStatusTest : public bust::testing::Test {
     
     public:
-        TestingStatusTest() : Test("TestingStatusTest") {};
+        TestingStatusTest() : bust::testing::Test("TestingStatusTest") {};
         void init() {};
         void run();
         void cleanup() {};
 };
 
 
-class TestingTestTest : public Test {
+class TestingTestTest : public bust::testing::Test {
     private:
         void (*action)(TestingTestTest *t);
 

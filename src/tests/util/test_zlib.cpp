@@ -1,9 +1,9 @@
-#include "test_zlib.h"
-#include "zlib.h"
 
 #include <iostream>
+#include "zlib.h"
+#include "test_zlib.h"
 
-namespace util {
+namespace bust::util {
 
     struct ZLibTestCase {
         std::string name;

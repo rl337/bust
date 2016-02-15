@@ -1,7 +1,7 @@
 
 #include "png.h"
 
-namespace png {
+namespace bust::png {
 
     PNG::PNG(uint32_t width, uint32_t height) : crc() {
         this->width = width;

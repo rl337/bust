@@ -1,11 +1,12 @@
 #include "test.h"
+#include "bitsets.h"
 
-namespace math {
+namespace bust::math {
 
-    class MathBitSetsTest : public testing::Test {
+    class MathBitSetsTest : public bust::testing::Test {
 
         public:
-            MathBitSetsTest() : testing::Test("MathBitSetsTest") {}
+            MathBitSetsTest() : bust::testing::Test("MathBitSetsTest") {}
 
             void run();
             void init(){};

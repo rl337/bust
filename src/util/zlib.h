@@ -9,7 +9,7 @@
 
 #include "checksums.h"
 
-namespace util {
+namespace bust::util {
 
     static const uint16_t ZLIB_HEADER =  0x7801;
     static const uint16_t ZLIB_DEFLATE_MAX_BLOCKSIZE = 0xFFFF;

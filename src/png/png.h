@@ -1,5 +1,5 @@
-#ifndef __JV_PNG_H__
-#define __JV_PNG_H__
+#ifndef __BUST_PNG_PNG_H__
+#define __BUST_PNG_PNG_H__
 
 #include <cstdint>
 #include <iostream>
@@ -9,7 +9,7 @@
 #include "checksums.h"
 #include "zlib.h"
 
-namespace png {
+namespace bust::png {
 
     class PNG {
         private:

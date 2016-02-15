@@ -2,9 +2,9 @@
 
 #include "test_svg.h"
 
-namespace svg {
+namespace bust::svg {
 
-    SVGSuite::SVGSuite() : Suite("SVGSuite", true) {
+    SVGSuite::SVGSuite() : bust::testing::Suite("SVGSuite", true) {
         this->add(new SVGSVGTest());
     }
 

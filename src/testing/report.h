@@ -1,5 +1,5 @@
-#ifndef __JV_TESTING_REPORT_H__
-#define __JV_TESTING_REPORT_H__
+#ifndef __BUST_TESTING_REPORT_H__
+#define __BUST_TESTING_REPORT_H__
 
 #include <string>
 #include <vector>
@@ -7,7 +7,7 @@
 #include "test.h"
 #include "suite.h"
 
-namespace testing {
+namespace bust::testing {
 
     class Suite;
 

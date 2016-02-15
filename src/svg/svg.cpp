@@ -1,7 +1,7 @@
 
 #include "svg.h"
 
-namespace svg {
+namespace bust::svg {
 
     SVG::SVG(std::string title, std::string description, int width, int height, Shape *shapes[], std::size_t n, Style style) : Shape(style), title(title), description(description), width(width), height(height) {
         for(std::size_t i = 0; i < n; i++) {
