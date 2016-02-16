@@ -6,7 +6,7 @@ set (bust_VERSION_MAJOR 0)
 set (bust_VERSION_MINOR 1)
 set (CMAKE_MACOSX_RPATH 1)
 
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wc++1z-extensions")
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1z -Wall")
 
 include_directories("${PROJECT_SOURCE_DIR}/testing")
 include_directories("${PROJECT_SOURCE_DIR}/math")
