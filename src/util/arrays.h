@@ -15,11 +15,12 @@ namespace bust::util {
             CircularArray(std::size_t len=16);
             CircularArray(const CircularArray<T>& ca);
             CircularArray(const T arr[], std::size_t len=16);
+            CircularArray(T arr[], std::size_t len=16);
 
             ~CircularArray() { }
             uint32_t size() { return this->length; }
 
-            const T& operator[](std::size_t i) const { return this->data[i % this->legnth]; }
+            const T& operator[](std::size_t i) const { return this->data[i % this->length]; }
             T& operator[](std::size_t i) { return this->data[i % this->length]; }
     };
 

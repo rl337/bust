@@ -3,6 +3,7 @@
 #include "test_checksums.h"
 #include "test_zlib.h"
 #include "test_color.h"
+#include "test_arrays.h"
 
 namespace bust::util {
 
@@ -10,5 +11,6 @@ namespace bust::util {
         this->add(new UtilChecksumsTest());
         this->add(new UtilZLibTest());
         this->add(new UtilColorTest());
+        this->add(new UtilArraysTest());
     }
 }
