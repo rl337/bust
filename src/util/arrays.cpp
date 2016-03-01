@@ -28,6 +28,32 @@ namespace bust::util {
         }
     }
 
+    template <typename T>
+    std::string CircularArray<T>::to_string() {
+        std::stringstream out;
+        std::size_t size = this->data.size() - 1;
+        for(std::size_t i = 0; i < size; i++) {
+            out << this->data[i] << ',';
+        }
+        out << this->data[size];
+        return out.str();
+    }
+
+    template <typename T>
+    std::string CircularArray2D<T>::to_string() {
+        std::stringstream out;
+        for(std::size_t y = 0; y < this->height; y++) {
+            for(std::size_t x = 0; x < this->width-1; x++) {
+                out << this->get2D(x, y) << ',';
+            }
+            out << this->get2D(this->width-1, y) << std::endl;
+        }
+        out << std::endl;
+
+        return out.str();
+    }
+
     template class CircularArray<int>;
+    template class CircularArray2D<int>;
 }
 
