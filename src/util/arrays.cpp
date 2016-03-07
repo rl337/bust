@@ -1,5 +1,6 @@
 
 #include "arrays.h"
+#include <iostream>
 
 namespace bust::util {
 
@@ -63,20 +64,32 @@ namespace bust::util {
 
     template <typename T>
     T& InterpolatedCircularArray2D<T>::get2D(double x, double y) {
-        while (x < 0) {
-            x += (double) this->data.get_width();
-        }
-        while (y < 0) {
-            y += (double) this->data.get_height();
-        }
-        return this->data.get2D((std::size_t) x, (std::size_t) y);
+        return this->interpolation2D(this->data, x, y);
     }
 
+    template <typename T>
+    T& method_truncate(CircularArray2D<T> &array, double x, double y) { 
+        while (x < 0) {
+            x += (double) array.get_width();
+        }
+        while (y < 0) {
+            y += (double) array.get_height();
+        }
+
+        return array.get2D((std::size_t) x, (std::size_t) y);
+    }
+
+    template uint32_t& method_truncate<uint32_t>(CircularArray2D<uint32_t> &array, double x, double y);
+    template int& method_truncate<int>(CircularArray2D<int> &array, double x, double y);
+
     template class CircularArray<int>;
+    template class CircularArray<uint32_t>;
+
     template class CircularArray2D<int>;
+    template class CircularArray2D<uint32_t>;
 
     template class InterpolatedCircularArray2D<int>;
-
+    template class InterpolatedCircularArray2D<uint32_t>;
 
 }
 

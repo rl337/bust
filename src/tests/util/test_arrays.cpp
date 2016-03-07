@@ -92,7 +92,8 @@ namespace bust::util {
                    32, 1, 71, 3,
                    32, 1, 71, 3,
                    32, 1, 71, 3,
-               }, 4, 4
+               }, 4, 4,
+               bust::util::method_truncate
           },
           [](InterpolatedCircularArray2D<int> &array, Coord2D<double> &index) { return array.get2D(index.x, index.y); },
           { {0.0,0.0}, {2.0,2.0}, {3.0,3.0}, {0.1, 0.1}, {0.7, 0.7}, {1.1, 1.1} },

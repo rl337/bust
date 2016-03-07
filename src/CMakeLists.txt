@@ -107,3 +107,13 @@ target_link_libraries( bust_colorbars
     bust_math
     bust_png
 )
+
+add_executable(bust_render_arrays
+    cmds/render_arrays/main.cpp
+)
+
+target_link_libraries( bust_render_arrays
+    bust_util
+    bust_png
+)
+

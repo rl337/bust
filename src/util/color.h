@@ -35,10 +35,9 @@ namespace bust::util {
         static const Color Maroon("maroon", 0x800000FF);
         static const Color Red("red", 0xFF0000FF);
 
-        static const Color Green("green", 0x008000FF);
+        static const Color Olive("olive", 0x008000FF);
         static const Color Lime("lime", 0x00FF00FF);
 
-        static const Color Olive("olive", 0x008000FF);
         static const Color Yellow("lime", 0xFFFF00FF);
 
         static const Color Navy("navy", 0x000080FF);
