@@ -60,6 +60,15 @@ namespace bust::testing {
         return x.str();
     }
 
+    std::string _messageLongHex(std::string name, std::string mesg, long expected, long actual) {
+        std::stringstream x;
+        x << name << ": " << mesg;
+        x << " Expected: " << std::setw(8) << std::setfill('0') << std::hex << expected;
+        x << " Actual: " << std::setw(8) << std::setfill('0') << std::hex << actual;
+
+        return x.str();
+    }
+
     std::string _firstlast(std::string x) {
         if (x.length() < 15) {
             return x;
@@ -70,7 +79,7 @@ namespace bust::testing {
         return result.str(); 
     }
 
-    template<typename X> std::string _messageHex(std::string name, std::string mesg, std::string expected, std::string actual) {
+    template<typename X> std::string _messageStringHex(std::string name, std::string mesg, std::string expected, std::string actual) {
         std::stringstream x;
 
         char str[5];
@@ -142,6 +151,12 @@ namespace bust::testing {
         }
     }
 
+    void Test::assertEqualHex(std::string mesg, unsigned long expected, unsigned long actual) {
+        if (expected != actual) {
+            throw AssertionFail(_messageLongHex(name, mesg, expected, actual));
+        }
+    }
+
     void Test::assertEqual(std::string mesg, double expected, double actual, double error) {
         float low = expected - error;
         float high = expected + error;
@@ -162,7 +177,7 @@ namespace bust::testing {
 
     void Test::assertEqualHex(std::string mesg, std::string expected, std::string actual) {
         if (expected != actual) {
-            throw AssertionFail(_messageHex<std::string>(name, mesg, expected, actual));
+            throw AssertionFail(_messageStringHex<std::string>(name, mesg, expected, actual));
         }
     }
 

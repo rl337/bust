@@ -3,6 +3,7 @@
 
 #include <string>
 #include <iostream>
+#include <iomanip>
 #include <sstream>
 #include <exception>
 
@@ -42,6 +43,7 @@ namespace bust::testing {
             void assertEqual(std::string mesg, double expected, double actual);
             void assertEqual(std::string mesg, std::string expected, std::string actual);
             void assertEqualHex(std::string mesg, std::string expected, std::string actual);
+            void assertEqualHex(std::string mesg, unsigned long expected, unsigned long actual);
 
             void assertNotEqual(std::string mesg, int expected, int actual);
             void assertNotEqual(std::string mesg, unsigned expected, unsigned actual);

@@ -2,6 +2,8 @@
 #define __JV_UTIL_COLOR_H__
 
 #include <cstddef>
+#include <iostream>
+#include <iomanip>
 #include <string>
 
 namespace bust::util {
@@ -9,24 +11,58 @@ namespace bust::util {
     struct Color {
         private:
             std::string name;
-            uint32_t value;
+            union {
+                uint8_t component[4];
+                uint32_t rgba;
+            } value;
 
         public:
-            Color(const std::string n, uint32_t v) : name(n), value(v) {};
-            Color(const std::string n) : name(n), value(0) {};
-            Color(const Color &c) : name(c.name), value(c.value) {};
+            Color(const std::string n, uint32_t v) : name(n) { value.rgba = v; };
+            Color(const std::string n) : Color(n, 0) {};
+            Color(const Color &c) : Color(c.name, c.value.rgba) {};
+            Color() : Color("Empty", 0x00000000) {};
 
             inline bool operator==(const Color &rhs) {
-                return this->name == rhs.name && this->value == rhs.value;
+                return this->name == rhs.name && this->value.rgba == rhs.value.rgba;
             }
 
             inline bool operator!=(const Color &rhs) {
-                return this->name != rhs.name || this->value != rhs.value;
+                return this->name != rhs.name || this->value.rgba != rhs.value.rgba;
+            }
+
+            Color operator*(const double rhs) {
+                Color result(*this);
+                result.value.component[3] = (uint8_t) ( (double) this->value.component[3] * rhs);
+                result.value.component[2] = (uint8_t) ( (double) this->value.component[2] * rhs);
+                result.value.component[1] = (uint8_t) ( (double) this->value.component[1] * rhs);
+
+                // Don't scale the alpha channel
+                // result.value.component[0] = (uint8_t) ( (double) this->value.component[0] * rhs);
+
+                return result;
+            }
+
+            Color operator+(const Color &rhs) {
+                Color result(*this);
+                result.value.component[3] = this->value.component[3] + rhs.value.component[3];
+                result.value.component[2] = this->value.component[2] + rhs.value.component[2];
+                result.value.component[1] = this->value.component[1] + rhs.value.component[1];
+
+                // Take the largest Alpha of the two. Don't actually add.
+                if (this->value.component[0] > rhs.value.component[0]) {
+                    result.value.component[0] = this->value.component[0];
+                } else { 
+                    result.value.component[0] = rhs.value.component[0];
+                }
+
+                return result;
             }
 
             inline std::string getName() const { return this->name; }
-            inline uint32_t getValue() const { return this->value; }
+            inline uint32_t getValue() const { return this->value.rgba; }
     };
+
+    std::ostream& operator<<(std::ostream &o, const Color &a);
 
     namespace vga16 {
         static const Color Black("black", 0x000000FF);
