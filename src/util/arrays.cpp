@@ -1,6 +1,5 @@
-
 #include "arrays.h"
-#include <iostream>
+#include "color.h"
 
 namespace bust::util {
 
@@ -63,33 +62,78 @@ namespace bust::util {
 
 
     template <typename T>
-    T& InterpolatedCircularArray2D<T>::get2D(double x, double y) {
+    T InterpolatedCircularArray2D<T>::get2D(double x, double y) {
         return this->interpolation2D(this->data, x, y);
     }
 
-    template <typename T>
-    T& method_truncate(CircularArray2D<T> &array, double x, double y) { 
-        while (x < 0) {
-            x += (double) array.get_width();
-        }
-        while (y < 0) {
-            y += (double) array.get_height();
+    std::size_t normalize_coord(double coord, double unit) {
+        while (coord < 0.0) {
+            coord += unit;
         }
 
-        return array.get2D((std::size_t) x, (std::size_t) y);
+        return (std::size_t) coord;
     }
 
-    template uint32_t& method_truncate<uint32_t>(CircularArray2D<uint32_t> &array, double x, double y);
-    template int& method_truncate<int>(CircularArray2D<int> &array, double x, double y);
+    template <typename T>
+    T method_truncate(CircularArray2D<T> &array, double x, double y) { 
+        return array.get2D(normalize_coord(x, array.get_width()), normalize_coord(y, array.get_height()));
+    }
+
+    template <typename T>
+    T method_linear(CircularArray2D<T> &array, double x, double y) { 
+        double min_x = std::floor(x);
+        double max_x = std::ceil(x);
+        if (max_x == min_x) max_x += 1.0;
+        double min_y = std::floor(y);
+        double max_y = std::ceil(y);
+        if (max_y == min_y) max_y += 1.0;
+
+        double delta_min_x = x - min_x;
+        double delta_max_x = max_x - x; 
+        double delta_min_y = y - min_y;
+        double delta_max_y = max_y - y;
+
+        double width = (double) array.get_width();
+        double height = (double) array.get_height();
+
+        T ul = array.get2D(normalize_coord(min_x, width),  normalize_coord(min_y, height));
+        T ur = array.get2D(normalize_coord(max_x, width),  normalize_coord(min_y, height));
+        T ll = array.get2D(normalize_coord(min_x, width),  normalize_coord(max_y, height));
+        T lr = array.get2D(normalize_coord(max_x, width),  normalize_coord(max_y, height));
+
+        double ul_scale = (1.0 - delta_min_x) * (1.0 - delta_min_y);
+        double ur_scale = (1.0 - delta_max_x) * (1.0 - delta_min_y);
+        double ll_scale = (1.0 - delta_min_x) * (1.0 - delta_max_y);
+        double lr_scale = (1.0 - delta_max_x) * (1.0 - delta_max_y);
+
+        T result = ul * ul_scale + ur * ur_scale + ll * ll_scale + lr * lr_scale;
+        return result;
+    }
+
+    template uint32_t method_truncate<uint32_t>(CircularArray2D<uint32_t> &array, double x, double y);
+    template int method_truncate<int>(CircularArray2D<int> &array, double x, double y);
+
+    template uint32_t method_linear<uint32_t>(CircularArray2D<uint32_t> &array, double x, double y);
+    template int method_linear<int>(CircularArray2D<int> &array, double x, double y);
+
+    template Color method_linear<Color>(CircularArray2D<Color> &array, double x, double y);
+    template Color method_truncate<Color>(CircularArray2D<Color> &array, double x, double y);
 
     template class CircularArray<int>;
     template class CircularArray<uint32_t>;
+    template class CircularArray<Color>;
 
     template class CircularArray2D<int>;
     template class CircularArray2D<uint32_t>;
+    template class CircularArray2D<Color>;
 
     template class InterpolatedCircularArray2D<int>;
     template class InterpolatedCircularArray2D<uint32_t>;
+    template class InterpolatedCircularArray2D<Color>;
+
+
+
+
 
 }
 
