@@ -4,6 +4,7 @@
 #include "test_zlib.h"
 #include "test_color.h"
 #include "test_arrays.h"
+#include "test_base64.h"
 
 namespace bust::util {
 
@@ -12,5 +13,6 @@ namespace bust::util {
         this->add(new UtilZLibTest());
         this->add(new UtilColorTest());
         this->add(new UtilArraysTest());
+        this->add(new UtilBase64Test());
     }
 }
