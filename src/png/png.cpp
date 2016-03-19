@@ -3,6 +3,8 @@
 
 namespace bust::png {
 
+    PixelOutOfBounds png_pixel_out_of_bounds;
+
     PNG::PNG(uint32_t width, uint32_t height) : crc() {
         this->width = width;
         this->height = height;

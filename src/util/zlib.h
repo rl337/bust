@@ -45,7 +45,8 @@ namespace bust::util {
         virtual const char* what() const throw() {
             return "Attempt to write zlib block after last block was written";
         }
-    } zlib_write_after_last_error;
+    };
+    extern WriteAfterLastBlock zlib_write_after_last_error;
 
 }
 

@@ -3,6 +3,8 @@
 
 namespace bust::util {
 
+    WriteAfterLastBlock zlib_write_after_last_error;
+
     void ZLib::append(std::ostream &stream) {
         uint16_t header = htons(ZLIB_HEADER);
         stream.write(reinterpret_cast<char *>(const_cast<uint16_t *>(&header)), sizeof(uint16_t));

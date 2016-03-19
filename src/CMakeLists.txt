@@ -43,6 +43,7 @@ add_library(bust_svg SHARED
     svg/svg.cpp
     svg/style.cpp
 )
+target_link_libraries( bust_svg bust_png bust_util )
 
 add_library(test_testing SHARED
     tests/testing/test_testing.cpp
@@ -86,7 +87,6 @@ add_library(test_svg SHARED
 target_link_libraries( test_svg
     bust_testing
     bust_svg
-    bust_png
 )
 
 add_executable(bust_tests
@@ -108,6 +108,7 @@ add_executable(bust_colorbars
 target_link_libraries( bust_colorbars
     bust_math
     bust_png
+    bust_svg
 )
 
 add_executable(bust_render_arrays

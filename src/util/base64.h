@@ -1,5 +1,5 @@
-#ifndef __JV_UTIL_ZLIB_H__
-#define __JV_UTIL_ZLIB_H__
+#ifndef __JV_UTIL_BASE64_H__
+#define __JV_UTIL_BASE64_H__
 
 #include <cstdint>
 #include <iostream>

@@ -21,7 +21,9 @@ namespace bust::svg {
             stream << "height=\"" << this->height <<  "px\" ";
         }
 
-        stream << "version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">" << std::endl;
+        stream << "version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" " <<
+                  "xmlns:xlink=\"http://www.w3.org/1999/xlink\" " << 
+                  ">" << std::endl;
 
         if (this->title != "") {
             stream << "<title>" << this->title << "</title>" << std::endl;
@@ -117,6 +119,21 @@ namespace bust::svg {
         this->appendStyle(stream, this->getStyle());
 
         stream <<  "/>";
+    }
+
+    void Image::append(std::ostream &stream) {
+        bust::util::Base64 base64; 
+
+        std::stringstream imagedata;
+        this->image.append(imagedata);
+
+        std::string base64data = base64.encode(imagedata.str());
+        stream << "<image x=\"" << this->x << "\" " <<
+                         "y=\"" << this->y << "\" " <<
+                         "width=\"" << this->image.getWidth() << "\" " <<
+                         "height=\"" << this->image.getHeight() << "\" " <<
+                         "xlink:href=\"data:image/png;base64," << base64data <<
+                  "\" />";
     }
 
 }

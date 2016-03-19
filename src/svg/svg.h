@@ -7,6 +7,8 @@
 #include <iostream>
 
 #include "style.h"
+#include "png.h"
+#include "base64.h"
 
 namespace bust::svg {
 
@@ -127,6 +129,19 @@ namespace bust::svg {
             inline std::vector<Point> *getPoints() { return new std::vector<Point>(this->points); }
             inline void add(const Point &p) { this->points.push_back(p); }
  
+            void append(std::ostream &stream);
+    };
+
+    class Image : public Shape {
+        private:
+            int x;
+            int y;
+            bust::png::PNG &image;
+
+        public:
+            Image(int x, int y, bust::png::PNG &image, Style s) : Shape(s), x(x), y(y), image(image) {}
+            Image(int x, int y, bust::png::PNG &image) : Shape(styles::Default), x(x), y(y), image(image) {}
+
             void append(std::ostream &stream);
     };
 }

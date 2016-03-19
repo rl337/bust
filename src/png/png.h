@@ -51,7 +51,9 @@ namespace bust::png {
         virtual const char* what() const throw() {
             return "attempt to set a pixel beyond bounds of image";
         }
-    } png_pixel_out_of_bounds;
+    };
+
+    extern PixelOutOfBounds png_pixel_out_of_bounds;
 
 }
 
