@@ -70,6 +70,9 @@ namespace bust::util {
     template <typename T>
     T method_linear(CircularArray2D<T> &array, double x, double y);
 
+    template <typename T>
+    T method_cosine(CircularArray2D<T> &array, double x, double y);
+
 }
 
 

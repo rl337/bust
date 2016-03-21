@@ -110,14 +110,51 @@ namespace bust::util {
         return result;
     }
 
+    const double pi = 3.1415926535897;
+    template <typename T>
+    T method_cosine(CircularArray2D<T> &array, double x, double y) { 
+        double min_x = std::floor(x);
+        double max_x = std::ceil(x);
+        if (max_x == min_x) max_x += 1.0;
+        double min_y = std::floor(y);
+        double max_y = std::ceil(y);
+        if (max_y == min_y) max_y += 1.0;
+
+        double delta_min_x = std::cos(pi/2 * (x - min_x));
+        double delta_max_x = 1.0 - delta_min_x;
+        double delta_min_y = std::cos(pi/2 * (y - min_y));
+        double delta_max_y = 1.0 - delta_min_y;
+
+        double width = (double) array.get_width();
+        double height = (double) array.get_height();
+
+        T ul = array.get2D(normalize_coord(min_x, width),  normalize_coord(min_y, height));
+        T ur = array.get2D(normalize_coord(max_x, width),  normalize_coord(min_y, height));
+        T ll = array.get2D(normalize_coord(min_x, width),  normalize_coord(max_y, height));
+        T lr = array.get2D(normalize_coord(max_x, width),  normalize_coord(max_y, height));
+
+        double ul_scale = (delta_min_x) * (delta_min_y);
+        double ur_scale = (delta_max_x) * (delta_min_y);
+        double ll_scale = (delta_min_x) * (delta_max_y);
+        double lr_scale = (delta_max_x) * (delta_max_y);
+
+        T result = ul * ul_scale + ur * ur_scale + ll * ll_scale + lr * lr_scale;
+        return result;
+    }
+
     template uint32_t method_truncate<uint32_t>(CircularArray2D<uint32_t> &array, double x, double y);
     template int method_truncate<int>(CircularArray2D<int> &array, double x, double y);
 
     template uint32_t method_linear<uint32_t>(CircularArray2D<uint32_t> &array, double x, double y);
     template int method_linear<int>(CircularArray2D<int> &array, double x, double y);
 
+    template uint32_t method_cosine<uint32_t>(CircularArray2D<uint32_t> &array, double x, double y);
+    template int method_cosine<int>(CircularArray2D<int> &array, double x, double y);
+
     template Color method_linear<Color>(CircularArray2D<Color> &array, double x, double y);
     template Color method_truncate<Color>(CircularArray2D<Color> &array, double x, double y);
+    template Color method_cosine<Color>(CircularArray2D<Color> &array, double x, double y);
+
 
     template class CircularArray<int>;
     template class CircularArray<uint32_t>;

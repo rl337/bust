@@ -118,5 +118,6 @@ add_executable(bust_render_arrays
 target_link_libraries( bust_render_arrays
     bust_util
     bust_png
+    bust_svg
 )
 
