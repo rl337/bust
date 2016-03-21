@@ -5,6 +5,7 @@
 #include "test_color.h"
 #include "test_arrays.h"
 #include "test_base64.h"
+#include "test_noise.h"
 
 namespace bust::util {
 
@@ -14,5 +15,6 @@ namespace bust::util {
         this->add(new UtilColorTest());
         this->add(new UtilArraysTest());
         this->add(new UtilBase64Test());
+        this->add(new UtilNoiseTest());
     }
 }
