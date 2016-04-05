@@ -136,5 +136,13 @@ namespace bust::svg {
                   "\" />";
     }
 
+    void Text::append(std::ostream &stream) {
+        stream << "<text x=\"" << this->x << "\" " <<
+                         "y=\"" << this->y << "\" ";
+        this->appendStyle(stream, this->getStyle());
+        stream << ">" << this->text;
+        stream << "</text>";
+    }
+
 }
 

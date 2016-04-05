@@ -144,6 +144,19 @@ namespace bust::svg {
 
             void append(std::ostream &stream);
     };
+
+    class Text : public Shape {
+        private:
+            int x;
+            int y;
+            std::string text;
+
+        public:
+            Text(int x, int y, std::string text, Style s) : Shape(s), x(x), y(y), text(text) {}
+            Text(int x, int y, std::string text) : Shape(styles::Default), x(x), y(y), text(text) {}
+
+            void append(std::ostream &stream);
+    };
 }
 
 #endif

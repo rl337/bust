@@ -42,6 +42,7 @@ target_link_libraries( bust_png bust_util )
 
 add_library(bust_svg SHARED
     svg/svg.cpp
+    svg/widgets.cpp
     svg/style.cpp
 )
 target_link_libraries( bust_svg bust_png bust_util )

@@ -58,6 +58,10 @@ namespace bust::svg {
             "<polyline points=\"1,1 -1,1 1,-1\" stroke=\"black\" stroke-width=\"2\"/>"
         },
         {
+            new Text(10, 30, "omg Omg OMG!"),
+            "<text x=\"10\" y=\"30\" stroke=\"black\" stroke-width=\"2\">omg Omg OMG!</text>"
+        },
+        {
             new SVG(shapes, 1),
             "<?xml version=\"1.0\" standalone=\"no\"?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n<circle cx=\"1\" cy=\"3\" r=\"5\" stroke=\"black\" stroke-width=\"2\"/>\n</svg>"
         },
