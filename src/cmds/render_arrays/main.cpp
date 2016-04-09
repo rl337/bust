@@ -26,7 +26,7 @@ class ICAPNG : public bust::png::PNG {
                     double dx = xscale * x;
                     double dy = yscale * y;
 
-                    this->set(x, y, array.get2D(dx, dy).getValue());
+                    this->set(x, y, array.get2D(dx, dy));
                 }
             }
         }

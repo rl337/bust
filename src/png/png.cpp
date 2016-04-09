@@ -20,6 +20,33 @@ namespace bust::png {
         }
     }
 
+    PNG::PNG(PNG &other) {
+        this->width = other.width;
+        this->height = other.height;
+        this->bitdepth = other.bitdepth;
+        this->colortype = other.colortype;
+        this->compression = other.compression;
+        this->filter = other.filter;
+        this->interlace = other.interlace;
+
+        this->buffer = new uint32_t[other.width * other.height];
+        for (uint32_t i = 0; i < other.width * other.height; i++) {
+            buffer[i] = other.buffer[i];
+        }
+    }
+
+    PNG::PNG(uint32_t width, uint32_t height, std::vector<bust::util::Color> data) : PNG(width, height) {
+        if (data.size() < width * height) {
+            throw png_pixel_out_of_bounds;        
+        }
+
+        for (uint32_t x = 0; x < width; x++) {
+            for (uint32_t y = 0; y < height; y++) {
+                this->set(x, y, data[x + y * width]);
+            }
+        }
+    }
+
     PNG::~PNG() {
         delete buffer;
     }
@@ -33,6 +60,25 @@ namespace bust::png {
         }
 
         this->buffer[y * this->width + x] = htonl(rgba);
+    }
+
+    bust::util::Color PNG::get(uint32_t x, uint32_t y) {
+        if (x > this->width) {
+            throw png_pixel_out_of_bounds;        
+        }
+        if (y > this->height) {
+            throw png_pixel_out_of_bounds;        
+        }
+
+        return bust::util::Color(this->buffer[y * this->width + x]);
+    }
+
+    void PNG::clear(bust::util::Color color) {
+        for (uint32_t x = 0; x < width; x++) {
+            for (uint32_t y = 0; y < height; y++) {
+                this->set(x, y, color);
+            }
+        }
     }
 
     void PNG::appendChunk(std::ostream &stream, uint32_t type, uint8_t *data, size_t size) {
@@ -101,4 +147,27 @@ namespace bust::png {
         appendChunk(stream, CHUNK_TYPE_IEND, nullptr, 0);
     }
 
+    void CustomPNG::plot(uint32_t x, uint32_t y) {
+        if (x > this->getWidth()) {
+            return;
+        }
+
+        if (y > this->getHeight()) {
+            return;
+        }
+
+        this->set(x, y, this->current);
+    }
+
+    void CustomPNG::rectangle(uint32_t x, uint32_t y, uint32_t width, uint32_t height) {
+        for (uint32_t a = x; a < x+width; a++) {
+            this->plot(a, y);
+            this->plot(a, y + height-1);
+        }
+
+        for (uint32_t a = y+1; a < y+height; a++) {
+            this->plot(x, a);
+            this->plot(x + width-1, a);
+        }
+    }
 }

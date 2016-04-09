@@ -2,54 +2,38 @@
 #include "png.h"
 
 #include <iostream>
+#include <iomanip>
+#include <sstream>
 
 namespace bust::png {
 
     struct PNGTestCase {
         std::string name;
         std::string expected;
-        PNG *png;
+        PNG png;
 
-        PNGTestCase(std::string name, std::string expected, PNG *png) : name(name), expected(expected), png(png) {}
+        PNGTestCase(std::string name, std::string expected, PNG png) : name(name), expected(expected), png(png) {}
         PNGTestCase(PNGTestCase &other) : PNGTestCase(other.name, other.expected, other.png) {}
 
         void execute(PNGPNGTest *t) {
             std::stringstream buffer;
-            this->png->append(buffer);
+            this->png.append(buffer);
             std::string actual = buffer.str();
             
             t->assertEqualHex(this->name, this->expected, actual);
         }
     };
 
-    class BlackPNG1x1 : public PNG {
-        public:
-            BlackPNG1x1() : PNG(1, 1) {
-                set(0, 0, 0x00000000);
-            }
-    } black_png_1x1;
+    const bust::util::Color O = bust::util::colors::White;
+    const bust::util::Color X = bust::util::colors::Black;
 
-    class RGBPNG3x1 : public PNG {
-        public:
-            RGBPNG3x1() : PNG(3, 1) {
-                set(0, 0, (uint32_t) 0xFF0000FF);
-                set(1, 0, (uint32_t) 0x00FF00FF);
-                set(2, 0, (uint32_t) 0x0000FFFF);
-            }
-    } rgb_png_3x1;
-
-    class RGBPNG1x3 : public PNG {
-        public:
-            RGBPNG1x3() : PNG(1, 3) {
-                set(0, 0, (uint32_t) 0xFF0000FF);
-                set(0, 1, (uint32_t) 0x00FF00FF);
-                set(0, 2, (uint32_t) 0x0000FFFF);
-            }
-    } rgb_png_1x3;
+    const bust::util::Color R = bust::util::colors::Red;
+    const bust::util::Color G = bust::util::colors::Lime;
+    const bust::util::Color B = bust::util::colors::Blue;
 
     PNGTestCase png_png_cases[] = {
         {
-            "PNG: 1x1 black PNG",
+            "PNG: 1x1 'None' PNG",
             std::string(
                 "\x89\x50\x4e\x47\x0d\x0a\x1a\x0a"
                 "\x00\x00\x00\x0d\x49\x48\x44\x52"
@@ -63,7 +47,7 @@ namespace bust::png {
                 "\x82",
                 73
             ),
-            &black_png_1x1
+            { 1, 1, { bust::util::colors::None } }
         },
         {
             "PNG: 3x1 RGB PNG",
@@ -76,7 +60,7 @@ namespace bust::png {
                 "\x82",
                 81
             ),
-            &rgb_png_3x1
+            { 3, 1, { R, G, B } }
         },
         {
             "PNG: 1x3 RGB PNG",
@@ -89,13 +73,68 @@ namespace bust::png {
                 "\x42\x60\x82",
                 83
             ),
-            &rgb_png_1x3
+            { 1, 3, { R, G, B } }
+        },
+    };
+
+    void printPNG(PNG &png) {
+        uint32_t width = png.getWidth();
+        uint32_t height = png.getHeight();
+
+        std::stringstream buff;
+        for (uint32_t y = 0; y < width; y++) {
+            for (uint32_t x = 0; x < height; x++) {
+                buff << std::setw(8) << std::setfill('0') << std::hex << png.get(x, y).getValue() << " ";
+            }
+            buff << std::endl;
+        }
+
+        std::cout << buff.str() << std::endl;
+    }
+
+    struct PNGCustomPNGTestCase {
+        std::string name;
+        PNG expected;
+        void (*op)(CustomPNG &png);
+
+        void run(bust::testing::Test *t) {
+        
+            uint32_t width = this->expected.getWidth();
+            uint32_t height = this->expected.getHeight();
+
+            CustomPNG png(width, height);
+            this->op(png);
+
+            for (uint32_t x = 0; x < width; x++) {
+                for (uint32_t y = 0; y < height; y++) {
+                    std::stringstream testname;
+                    testname << this->name << " X: " << x << " Y: " << y;
+                    t->assertEqualHex(testname.str(), this->expected.get(x, y).getValue(), png.get(x, y).getValue());
+                }
+            }
+        }
+    };
+
+    PNGCustomPNGTestCase png_custom_png_cases[] = {
+        { "Simple Rectangle",
+            { 5, 5, {
+                O, O, O, O, O,
+                O, X, X, X, O,
+                O, X, O, X, O,
+                O, X, O, X, O,
+                O, X, X, X, O,
+            }},
+            [](CustomPNG &png) { png.PNG::clear(O); png.setCurrentColor(X); png.rectangle(1, 1, 3, 4); },
         },
     };
 
     void PNGPNGTest::run() {
         for (PNGTestCase t : png_png_cases) {
             t.execute(this);        
+        }
+
+        for (PNGCustomPNGTestCase t : png_custom_png_cases) {
+            t.run(this);        
         }
     }
 

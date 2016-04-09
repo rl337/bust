@@ -26,9 +26,9 @@ namespace bust::svg {
     class RGBPNG1x3 : public bust::png::PNG {
         public:
             RGBPNG1x3() : PNG(1, 3) {
-                set(0, 0, (uint32_t) 0xFF0000FF);
-                set(0, 1, (uint32_t) 0x00FF00FF);
-                set(0, 2, (uint32_t) 0x0000FFFF);
+                set(0, 0, bust::util::colors::Red);
+                set(0, 1, bust::util::colors::Lime);
+                set(0, 2, bust::util::colors::Blue);
             }
     } rgb_png_1x3;
 

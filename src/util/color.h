@@ -20,6 +20,7 @@ namespace bust::util {
             Color(const std::string n, uint32_t v) : name(n) { value.rgba = v; };
             Color(const std::string n) : Color(n, 0) {};
             Color(const Color &c) : Color(c.name, c.value.rgba) {};
+            Color(const uint32_t rgba) : Color("", rgba) {};
             Color() : Color("Empty", 0x00000000) {};
 
             inline bool operator==(const Color &rhs) {
@@ -121,7 +122,7 @@ namespace bust::util {
         static const Color PaleGoldenrod("palegoldenrod", 0xEEE8AAFF);
         static const Color PapayaWhip("papayawhip", 0xFFEFD5FF);
         static const Color Plum("plum", 0xDDA0DDFF);
-        static const Color Red("red", 0xFF000000);
+        static const Color Red("red", 0xFF0000FF);
         static const Color RosyBrown("rosybrown", 0xBC8F8F);
         static const Color SandyBrown("sandybrown", 0xF4A460FF);
         static const Color Silver("silver", 0xC0C0C0FF);
