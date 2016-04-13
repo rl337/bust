@@ -148,11 +148,11 @@ namespace bust::png {
     }
 
     void CustomPNG::plot(uint32_t x, uint32_t y) {
-        if (x > this->getWidth()) {
+        if (x >= this->getWidth()) {
             return;
         }
 
-        if (y > this->getHeight()) {
+        if (y >= this->getHeight()) {
             return;
         }
 
@@ -170,4 +170,139 @@ namespace bust::png {
             this->plot(x + width-1, a);
         }
     }
+
+    // first two are "to octant 0" send two are "from octant 0"
+    const int64_t bresenham_octants[8][4][2] = {
+        { { 1, 0}, { 0, 1},   { 1, 0},{ 0, 1} },
+        { { 0, 1}, { 1, 0},   { 0, 1},{ 1, 0} },
+        { { 0, 1}, {-1, 0},   { 0,-1},{ 1, 0} },
+        { {-1, 0}, { 0, 1},   {-1, 0},{ 0, 1} },
+        { {-1, 0}, { 0,-1},   {-1, 0},{ 0,-1} },
+        { { 0,-1}, {-1, 0},   { 0,-1},{-1, 0} },
+        { { 0,-1}, { 1, 0},   { 0, 1},{-1, 0} },
+        { { 1, 0}, { 0,-1},   { 1, 0},{ 0,-1} },
+    };
+
+    void bresenham(CustomPNG *png, uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, int octant) {
+        int64_t tx1 = (int64_t) x1*bresenham_octants[octant][0][0] + (int64_t) y1*bresenham_octants[octant][0][1]; 
+        int64_t ty1 = (int64_t) x1*bresenham_octants[octant][1][0] + (int64_t) y1*bresenham_octants[octant][1][1]; 
+
+        int64_t tx2 = (int64_t) x2*bresenham_octants[octant][0][0] + (int64_t) y2*bresenham_octants[octant][0][1]; 
+        int64_t ty2 = (int64_t) x2*bresenham_octants[octant][1][0] + (int64_t) y2*bresenham_octants[octant][1][1]; 
+
+        int64_t dx = tx2 - tx1;
+        int64_t dy = ty2 - ty1;
+
+        int64_t D = 2*dy - dx;
+        int64_t y = ty1;
+
+        if (D > 0) {
+            D = D - (2*dx);
+        }
+
+        //std::cout << "octant: " << octant << " tx1: " << tx1 << " tx2: " << tx2 << std::endl;
+        for (int64_t x = tx1; x <= tx2; x++) {
+            uint32_t tx = (uint32_t) ((int64_t) x*bresenham_octants[octant][2][0] + (int64_t) y*bresenham_octants[octant][2][1]); 
+            uint32_t ty = (uint32_t) ((int64_t) x*bresenham_octants[octant][3][0] + (int64_t) y*bresenham_octants[octant][3][1]); 
+            //std::cout << "(" << tx << "," << ty << ") ";
+            
+            png->plot(tx,ty);
+            D = D + (2*dy);
+            if (D > 0) {
+                y = y + 1;
+                D = D - (2*dx);
+            }
+        }
+        //std::cout << std::endl;
+    }
+
+    void CustomPNG::line(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2) {
+        int64_t dx = (int64_t) x2 - (int64_t) x1;
+        int64_t dy = (int64_t) y2 - (int64_t) y1;
+
+        if (dx == 0 && dy == 0) {
+            plot(x1, y1);
+            return;
+        }
+
+        uint32_t miny, maxy;
+        if (dy > 0) {
+            miny = y1;
+            maxy = y2;
+        } else {
+            miny = y2;
+            maxy = y1;
+        }
+
+        // We have a vertical line. 
+        if (dx == 0) {
+            for(uint32_t j = miny; j <= maxy; j++) {
+                plot(x1, j);
+            }
+            return;
+        }
+
+        uint32_t minx, maxx;
+        if (dx > 0) {
+            minx = x1;
+            maxx = x2;
+        } else {
+            minx = x2;
+            maxx = x1;
+        }
+
+        // We have a horizontal line. 
+        if (dy == 0) {
+            for(uint32_t i = minx; i <= maxx; i++) {
+                plot(i, y1);
+            }
+            return;
+        }
+
+        // at this point we know we have a diagonal line.
+        // we also have a normalized min/max x and y
+
+        uint64_t adx = dx < 0 ? -dx : dx;
+        uint64_t ady = dy < 0 ? -dy : dy;
+        
+        // figure out which octant we're in
+        if (dx > 0) {
+            if (dy > 0) {
+                if (ady > adx) {
+                    // octant 1
+                    bresenham(this, x1, y1, x2, y2, 1);
+                } else {
+                    // octant 0
+                    bresenham(this, x1, y1, x2, y2, 0);
+                }
+            } else {
+                if (ady > adx) {
+                    // octant 6
+                    bresenham(this, x1, y1, x2, y2, 6);
+                } else {
+                    // octant 7
+                    bresenham(this, x1, y1, x2, y2, 7);
+                }
+            }
+        } else {
+            if (dy > 0) {
+                if (ady > adx) {
+                    // octant 2
+                    bresenham(this, x1, y1, x2, y2, 2);
+                } else {
+                    // octant 3
+                    bresenham(this, x1, y1, x2, y2, 3);
+                }
+            } else {
+                if (ady > adx) {
+                    // octant 5
+                    bresenham(this, x1, y1, x2, y2, 5);
+                } else {
+                    // octant 4
+                    bresenham(this, x1, y1, x2, y2, 4);
+                }
+            }
+        }
+    }
+
 }

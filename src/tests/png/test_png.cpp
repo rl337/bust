@@ -77,10 +77,11 @@ namespace bust::png {
         },
     };
 
-    void printPNG(PNG &png) {
+    void printPNG(std::string title, PNG &png) {
         uint32_t width = png.getWidth();
         uint32_t height = png.getHeight();
 
+        std::cout << title << std::endl;
         std::stringstream buff;
         for (uint32_t y = 0; y < width; y++) {
             for (uint32_t x = 0; x < height; x++) {
@@ -104,6 +105,9 @@ namespace bust::png {
 
             CustomPNG png(width, height);
             this->op(png);
+            
+            //printPNG(this->name, this->expected);
+            //printPNG(this->name, png);
 
             for (uint32_t x = 0; x < width; x++) {
                 for (uint32_t y = 0; y < height; y++) {
@@ -125,6 +129,90 @@ namespace bust::png {
                 O, X, X, X, O,
             }},
             [](CustomPNG &png) { png.PNG::clear(O); png.setCurrentColor(X); png.rectangle(1, 1, 3, 4); },
+        },
+        { "Clipped Rectangle",
+            { 5, 5, {
+                O, O, O, O, O,
+                O, O, O, O, O,
+                O, O, O, X, X,
+                O, O, O, X, O,
+                O, O, O, X, O,
+            }},
+            [](CustomPNG &png) { png.PNG::clear(O); png.setCurrentColor(X); png.rectangle(3, 2, 3, 4); },
+        },
+        { "Vertical Lines",
+            { 5, 5, {
+                O, O, O, O, O,
+                X, O, O, X, O,
+                X, O, O, X, O,
+                X, X, O, X, X,
+                O, X, O, O, X,
+            }},
+            [](CustomPNG &png) {
+                png.PNG::clear(O);
+                png.setCurrentColor(X);
+                png.line(0, 1, 0, 3);
+                png.line(1, 3, 1, 5);
+                png.line(3, 3, 3, 1);
+                png.line(4, 5, 4, 3);
+            },
+        },
+        { "Horizontal Lines",
+            { 5, 5, {
+                O, X, X, X, O,
+                O, O, O, X, X,
+                O, O, O, O, O,
+                O, X, X, X, O,
+                O, O, O, X, X,
+            }},
+            [](CustomPNG &png) {
+                png.PNG::clear(O);
+                png.setCurrentColor(X);
+                png.line(1, 0, 3, 0);
+                png.line(3, 1, 5, 1);
+                png.line(3, 3, 1, 3);
+                png.line(5, 4, 3, 4);
+            },
+        },
+        { "1:1 diagonal Lines",
+            { 5, 5, {
+                X, O, O, O, X,
+                O, X, O, X, O,
+                O, O, X, O, O,
+                O, X, O, X, O,
+                X, O, O, O, X,
+            }},
+            [](CustomPNG &png) {
+                png.PNG::clear(O);
+                png.setCurrentColor(X);
+                png.line(0, 0, 4, 4);
+                png.line(4, 0, 0, 4);
+            },
+        },
+        { "Octant diagonal Lines",
+            { 9, 9, {
+                O, O, X, O, O, O, X, O, O,
+                O, O, X, O, O, O, X, O, O,
+                X, X, O, X, O, X, O, X, X,
+                O, O, X, X, O, X, X, O, O,
+                O, O, O, O, X, O, O, O, O,
+                O, O, X, X, O, X, X, O, O,
+                X, X, O, X, O, X, O, X, X,
+                O, O, X, O, O, O, X, O, O,
+                O, O, X, O, O, O, X, O, O,
+            }},
+            [](CustomPNG &png) {
+                png.PNG::clear(O);
+                png.setCurrentColor(X);
+                png.line(4, 4, 8, 2); // octant 0
+                png.line(4, 4, 6, 0); // octant 1
+                png.line(4, 4, 2, 0); // octant 2
+                png.line(4, 4, 0, 2); // octant 3
+                png.line(4, 4, 0, 6); // octant 4
+                png.line(4, 4, 2, 8); // octant 5
+                png.line(4, 4, 6, 8); // octant 6
+                png.line(4, 4, 8, 6); // octant 7
+            },
         },
     };
 
