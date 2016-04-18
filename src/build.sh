@@ -3,10 +3,18 @@
 CMD="$1"
 BUILDDIR="build"
 STARTDIR=`pwd`
-
-
 CMD=build
 TYPE=release
+
+if [ ! -d "$BUILDDIR" ]; then
+    mkdir -p "$BUILDDIR"
+    if [ $? -ne 0 ]; then
+        echo "Could not create $BUILDDIR"
+        exit -1
+    fi
+    CMD=rebuild
+fi
+
 while [ "X$1" != X ]; do
     case $1 in 
         debug) TYPE=DEBUG

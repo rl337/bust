@@ -15,7 +15,7 @@ namespace bust::math {
     Vector::Vector(double *data, std::size_t dimensions) : Vector::Vector(data, (std::size_t) 0, dimensions) { } 
 
     Vector::~Vector() {
-        delete this->content;
+        delete[] this->content;
         this->content = nullptr;
     }
     

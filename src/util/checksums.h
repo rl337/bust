@@ -1,6 +1,7 @@
 #ifndef __JV_MATH_CRC_H__
 #define __JV_MATH_CRC_H__
 
+#include <cstddef>
 #include <cstdint>
 
 namespace bust::util {
