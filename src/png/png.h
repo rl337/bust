@@ -61,7 +61,6 @@ namespace bust::png {
         private:
             bust::util::Color current;
 
-            void plot_signed(int64_t x, int64_t y);
         public:
             CustomPNG(uint32_t width, uint32_t height) : PNG(width, height), current(bust::util::colors::Black) { draw(); }
 
