@@ -147,25 +147,25 @@ namespace bust::png {
         appendChunk(stream, CHUNK_TYPE_IEND, nullptr, 0);
     }
 
-    void CustomPNG::plot(uint32_t x, uint32_t y) {
-        if (x >= this->getWidth()) {
+    void CustomPNG::plot(int64_t x, int64_t y) {
+        if (x < 0 || x >= this->getWidth()) {
             return;
         }
 
-        if (y >= this->getHeight()) {
+        if (y < 0 || y >= this->getHeight()) {
             return;
         }
 
-        this->set(x, y, this->current);
+        this->set((uint32_t) x, (uint32_t) y, this->current);
     }
 
-    void CustomPNG::rectangle(uint32_t x, uint32_t y, uint32_t width, uint32_t height) {
-        for (uint32_t a = x; a < x+width; a++) {
+    void CustomPNG::rectangle(int64_t x, int64_t y, uint32_t width, uint32_t height) {
+        for (int64_t a = x; a < x+width; a++) {
             this->plot(a, y);
             this->plot(a, y + height-1);
         }
 
-        for (uint32_t a = y+1; a < y+height; a++) {
+        for (int64_t a = y+1; a < y+height; a++) {
             this->plot(x, a);
             this->plot(x + width-1, a);
         }
@@ -216,7 +216,27 @@ namespace bust::png {
         //std::cout << std::endl;
     }
 
-    void CustomPNG::line(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2) {
+    void CustomPNG::circle(int64_t x, int64_t y, uint32_t r) {
+        int64_t dx = r;
+        int64_t dy = 0;
+        int64_t decision = 1 - dx;
+
+        while (dy <= dx) {
+            plot( x + dx, y + dy ); // Octant 1
+            plot( x + dy, y + dx ); // Octant 2
+            plot( x - dx, y + dy ); // Octant 4
+            plot( x - dy, y + dx ); // Octant 3
+            plot( x - dx, y - dy ); // Octant 5
+            plot( x - dy, y - dx ); // Octant 6
+            plot( x + dx, y - dy ); // Octant 7
+            plot( x + dy, y - dx ); // Octant 8
+            dy++;
+            if (decision <= 0) { decision += 2 * dy + 1; }
+            else { dx--; decision += 2 * (dy - dx) + 1; }
+        }
+    }
+
+    void CustomPNG::line(int64_t x1, int64_t y1, int64_t x2, int64_t y2) {
         int64_t dx = (int64_t) x2 - (int64_t) x1;
         int64_t dy = (int64_t) y2 - (int64_t) y1;
 
@@ -262,8 +282,8 @@ namespace bust::png {
         // at this point we know we have a diagonal line.
         // we also have a normalized min/max x and y
 
-        uint64_t adx = dx < 0 ? -dx : dx;
-        uint64_t ady = dy < 0 ? -dy : dy;
+        int64_t adx = dx < 0 ? -dx : dx;
+        int64_t ady = dy < 0 ? -dy : dy;
         
         // figure out which octant we're in
         if (dx > 0) {

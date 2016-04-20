@@ -214,6 +214,25 @@ namespace bust::png {
                 png.line(4, 4, 8, 6); // octant 7
             },
         },
+        { "circles",
+            { 9, 9, {
+                O, O, X, X, X, X, X, O, O,
+                O, X, O, O, O, O, O, X, O,
+                X, O, O, X, X, X, O, O, X,
+                X, O, X, O, O, O, X, O, X,
+                X, O, X, O, O, O, X, O, X,
+                X, O, X, O, O, O, X, O, X,
+                X, O, O, X, X, X, O, O, X,
+                O, X, O, O, O, O, O, X, O,
+                O, O, X, X, X, X, X, O, O,
+            }},
+            [](CustomPNG &png) {
+                png.PNG::clear(O);
+                png.setCurrentColor(X);
+                png.circle(4, 4, 2);
+                png.circle(4, 4, 4);
+            },
+        },
     };
 
     void PNGPNGTest::run() {

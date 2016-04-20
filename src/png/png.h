@@ -61,6 +61,7 @@ namespace bust::png {
         private:
             bust::util::Color current;
 
+            void plot_signed(int64_t x, int64_t y);
         public:
             CustomPNG(uint32_t width, uint32_t height) : PNG(width, height), current(bust::util::colors::Black) { draw(); }
 
@@ -68,9 +69,10 @@ namespace bust::png {
             bust::util::Color getCurrentColor(bust::util::Color color) { return color; }
 
             void clear() { this->PNG::clear(this->current); }
-            void plot(uint32_t x, uint32_t y);
-            void rectangle(uint32_t x, uint32_t y, uint32_t width, uint32_t height);
-            void line(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2);
+            void plot(int64_t x, int64_t y);
+            void rectangle(int64_t x, int64_t y, uint32_t width, uint32_t height);
+            void line(int64_t x1, int64_t y1, int64_t x2, int64_t y2);
+            void circle(int64_t x, int64_t y, uint32_t r);
 
             virtual void draw() {};
     };

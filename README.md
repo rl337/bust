@@ -6,7 +6,12 @@ The intention of "bust" is a from scratch implementation of existing libraries a
 Inspirations
 =====
 
-zlib / png
-The implementation of uncompressed zlib and its use in a png library was inspired by the following blog post:
-
+##zlib / png
+The implementation of uncompressed zlib and its use in a png library was inspired by the following blog post:  
 http://mainisusuallyafunction.blogspot.com/2012/04/minimal-encoder-for-uncompressed-pngs.html
+
+##Bresenham Line Algorithm
+https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
+
+##Bresenham Circle Algorithm
+https://en.wikipedia.org/wiki/Midpoint_circle_algorithm
