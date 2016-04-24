@@ -37,6 +37,7 @@ add_library(bust_math SHARED
 
 add_library(bust_png SHARED
     png/png.cpp
+    png/images.cpp
 )
 target_link_libraries( bust_png bust_util )
 
@@ -124,3 +125,12 @@ target_link_libraries( bust_render_arrays
     bust_svg
 )
 
+add_executable( bust_widget_demo
+    cmds/widgetdemo/main.cpp
+)
+
+target_link_libraries( bust_widget_demo
+    bust_util
+    bust_png
+    bust_svg
+)

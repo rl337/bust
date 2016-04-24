@@ -6,7 +6,6 @@ namespace bust::svg {
         Shape(s), bounds(x, y, png.getWidth(), png.getHeight()), image(x, y, png), title(x, y, title), description(x, y, description) {
     }
 
-
     void TitledImageWithCaption::append(std::ostream &stream) {
         this->bounds.append(stream);
         this->image.append(stream);

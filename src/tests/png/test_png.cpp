@@ -93,6 +93,12 @@ namespace bust::png {
         std::cout << buff.str() << std::endl;
     }
 
+    class TestPNG : public CustomPNG {
+        public:
+            TestPNG(uint32_t width, uint32_t height) : CustomPNG(width, height) {}
+            void draw() {}
+    };
+
     struct PNGCustomPNGTestCase {
         std::string name;
         PNG expected;
@@ -103,7 +109,7 @@ namespace bust::png {
             uint32_t width = this->expected.getWidth();
             uint32_t height = this->expected.getHeight();
 
-            CustomPNG png(width, height);
+            TestPNG png(width, height);
             this->op(png);
             
             //printPNG(this->name, this->expected);

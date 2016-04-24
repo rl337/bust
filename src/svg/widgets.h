@@ -20,7 +20,7 @@ namespace bust::svg {
 
         public:
             TitledImageWithCaption(int x, int y, bust::png::PNG &image, std::string title, std::string description, Style s);
-            TitledImageWithCaption(int x, int y, bust::png::PNG &image, std::string title, std::string description);
+            TitledImageWithCaption(int x, int y, bust::png::PNG &image, std::string title, std::string description) : TitledImageWithCaption(x, y, image, title, description, bust::svg::styles::Default) {}
             TitledImageWithCaption(int x, int y, bust::png::PNG &image, std::string title);
 
             inline Image& getImage() { return this->image; }

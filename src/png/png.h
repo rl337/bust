@@ -62,7 +62,7 @@ namespace bust::png {
             bust::util::Color current;
 
         public:
-            CustomPNG(uint32_t width, uint32_t height) : PNG(width, height), current(bust::util::colors::Black) { draw(); }
+            CustomPNG(uint32_t width, uint32_t height) : PNG(width, height), current(bust::util::colors::Black) {  }
 
             void setCurrentColor(bust::util::Color color) { this->current = color; }
             bust::util::Color getCurrentColor(bust::util::Color color) { return color; }
@@ -73,7 +73,7 @@ namespace bust::png {
             void line(int64_t x1, int64_t y1, int64_t x2, int64_t y2);
             void circle(int64_t x, int64_t y, uint32_t r);
 
-            virtual void draw() {};
+            virtual void draw() = 0;
     };
 
 
