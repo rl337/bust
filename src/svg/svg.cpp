@@ -56,6 +56,9 @@ namespace bust::svg {
             stream << "stroke=\"" << stroke.getName() << "\" " <<
                 "stroke-width=\"" << (int) stroke_width << "\"";
         }
+        if (style.getStyle() != "") {
+            stream << " style=\"" << style.getStyle() << "\"";
+        }
     }
 
     void Rectangle::append(std::ostream &stream) {
@@ -141,6 +144,29 @@ namespace bust::svg {
                          "y=\"" << this->y << "\" ";
         this->appendStyle(stream, this->getStyle());
         stream << ">" << this->text;
+        stream << "</text>";
+    }
+
+    void WrappedText::append(std::ostream &stream) {
+        stream << "<text x=\"" << this->x << "\" " <<
+                         "y=\"" << this->y << "\" ";
+        this->appendStyle(stream, this->getStyle());
+        stream << ">";
+        int splits = this->text.length() / this->line_length;
+        for (int i = 0; i < splits; i++) {
+            if (i) {
+                stream << "<tspan x=\"" << this->x << "\" dy=\"" << (this->text_height * i) << "\">";
+            } 
+            stream << this->text.substr(i*this->line_length, this->line_length);
+            if (i) {
+                stream << "</tspan>";
+            }
+        }
+        if (splits * this->line_length < this->text.length()) {
+            stream << "<tspan x=\"" << this->x << "\" dy=\"" << (this->text_height * (splits-1)) << "\">";
+            stream << this->text.substr(splits*this->line_length, this->text.length() - splits*this->line_length);
+            stream << "</tspan>";
+        }
         stream << "</text>";
     }
 

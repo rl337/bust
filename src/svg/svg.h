@@ -157,6 +157,22 @@ namespace bust::svg {
 
             void append(std::ostream &stream);
     };
+
+    class WrappedText : public Shape {
+        private:
+            int x;
+            int y;
+            std::string text;
+            int line_length;
+            int text_height;
+
+        public:
+            WrappedText(int x, int y, std::string text, uint32_t line_length, uint32_t text_height, Style s) : Shape(s), x(x), y(y), text(text), line_length(line_length), text_height(text_height) {}
+            WrappedText(int x, int y, std::string text, uint32_t line_length, uint32_t text_height) : WrappedText(x, y, text, line_length, text_height, styles::Default) {}
+
+            void append(std::ostream &stream);
+            int rows() { return this->text.length() / line_length; }
+    };
 }
 
 #endif

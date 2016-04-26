@@ -1,6 +1,4 @@
-#include "svg.h"
-#include "png.h"
-#include "color.h"
+#include "widgets.h"
 #include "arrays.h"
 #include <fstream>
 #include <vector>
@@ -33,22 +31,43 @@ class ICAPNG : public bust::png::PNG {
 };
 
 int main (int argc, char *argv[]) {
-    uint32_t width = 320;
-    uint32_t height = 240;
+    uint32_t img_width = 320;
+    uint32_t img_height = 240;
 
-    ICAPNG truncate(width, height, bust::util::method_truncate<bust::util::Color>);
-    ICAPNG linear(width, height, bust::util::method_linear<bust::util::Color>);
-    ICAPNG cosine(width, height, bust::util::method_cosine<bust::util::Color>);
-    bust::svg::Image truncateImage(0, 0, truncate);
-    bust::svg::Image linearImage(0, height + 20, linear);
-    bust::svg::Image cosineImage(0, height * 2 + 40, cosine);
+    ICAPNG truncate(img_width, img_height, bust::util::method_truncate<bust::util::Color>);
+    ICAPNG linear(img_width, img_height, bust::util::method_linear<bust::util::Color>);
+    ICAPNG cosine(img_width, img_height, bust::util::method_cosine<bust::util::Color>);
+
+    bust::svg::TitledImageWithCaption truncateWidget(
+        (uint32_t) 0, (uint32_t) 0,
+        img_width, img_height,
+        truncate,
+        "Method: Truncation",
+        "This method simply calls floor() before derefrencing the underlying array."
+    );
+
+    bust::svg::TitledImageWithCaption linearWidget(
+        (uint32_t) 0, (uint32_t) img_height + 8,
+        img_width, img_height,
+        linear,
+        "Method: Linear Interpolation",
+        "This method linearly interpolates a value between all neighbors."
+    );
+
+    bust::svg::TitledImageWithCaption cosineWidget(
+        (uint32_t) 0, (uint32_t) 2*img_height + 16,
+        img_width, img_height,
+        cosine,
+        "Method: Cosine Interpolation",
+        "This method uses a cos function to calculate the distance between neighbors then linearly interpolates based on the cosine distance."
+    );
 
     bust::svg::SVG svg(
         "Interpolation Functions",
         "Examples of images generated with different interpolation functions",
-        2550,
-        3300,
-        { &truncateImage, &linearImage, &cosineImage}
+        img_width * 2 + 32,
+        img_height * 3 + 24,
+        { &truncateWidget, &linearWidget, &cosineWidget}
     );
     
     std::ofstream out("arrays.svg", std::fstream::out);
