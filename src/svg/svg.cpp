@@ -147,24 +147,57 @@ namespace bust::svg {
         stream << "</text>";
     }
 
+    int find_last_space_before_len(std::string &str, size_t length, size_t start) {
+        int last = -1;
+        int curr = start;
+
+        int stop = start + length;
+        if ( str.length() < stop ) {
+            stop = str.length();
+        }
+
+        while (curr < stop) {
+            if (str[curr] == ' ') {
+                last = curr;
+            }
+            curr++;
+        }
+
+        if (last == -1 && curr < str.length()) {
+            return curr;
+        }
+        return last;
+    }
+
     void WrappedText::append(std::ostream &stream) {
         stream << "<text x=\"" << this->x << "\" " <<
                          "y=\"" << this->y << "\" ";
         this->appendStyle(stream, this->getStyle());
         stream << ">";
-        int splits = this->text.length() / this->line_length;
-        for (int i = 0; i < splits; i++) {
-            if (i) {
-                stream << "<tspan x=\"" << this->x << "\" dy=\"" << (this->text_height * i) << "\">";
+
+        int last = 0;
+        int index = find_last_space_before_len(this->text, this->line_length, 0);
+        int splits = 0;
+        while (index != -1) {
+            if (last) {
+                stream << "<tspan x=\"" << this->x << "\" dy=\"" << this->text_height << "\">";
             } 
-            stream << this->text.substr(i*this->line_length, this->line_length);
-            if (i) {
+            stream << this->text.substr(last, index - last);
+            if (last) {
                 stream << "</tspan>";
             }
+
+            last = index;
+            if (this->text[last] == ' ') {
+                last++;
+            }
+            index = find_last_space_before_len(this->text, this->line_length, index + 1);
+            splits++;
         }
-        if (splits * this->line_length < this->text.length()) {
-            stream << "<tspan x=\"" << this->x << "\" dy=\"" << (this->text_height * (splits-1)) << "\">";
-            stream << this->text.substr(splits*this->line_length, this->text.length() - splits*this->line_length);
+
+        if (last < this->text.length()) {
+            stream << "<tspan x=\""<< this->x << "\" dy=\"" << this->text_height << "\">";
+            stream << this->text.substr(last, this->line_length - last);
             stream << "</tspan>";
         }
         stream << "</text>";

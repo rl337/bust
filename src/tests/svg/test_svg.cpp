@@ -72,7 +72,11 @@ namespace bust::svg {
         {
             new SVG(images, 1),
             "<?xml version=\"1.0\" standalone=\"no\"?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n<svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">\n<image x=\"1\" y=\"3\" width=\"1\" height=\"3\" xlink:href=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAADCAYAAABS3WWCAAAAGklEQVR4AQEPAPD/AP8AAP8AAP8A/wAAAP//KeUF+7mCYzsAAAAASUVORK5CYII=\" />\n</svg>"
-        }
+        },
+        {
+            new WrappedText(10, 30, "omg Omg OMG!", 3, 16),
+            "<text x=\"10\" y=\"30\" stroke=\"black\" stroke-width=\"2\">omg<tspan x=\"10\" dy=\"16\">Omg</tspan><tspan x=\"10\" dy=\"16\">OMG</tspan><tspan x=\"10\" dy=\"16\">!</tspan></text>"
+        },
     };
 
 
