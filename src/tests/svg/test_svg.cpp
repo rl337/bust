@@ -77,6 +77,10 @@ namespace bust::svg {
             new WrappedText(10, 30, "omg Omg OMG!", 3, 16),
             "<text x=\"10\" y=\"30\" stroke=\"black\" stroke-width=\"2\">omg<tspan x=\"10\" dy=\"16\">Omg</tspan><tspan x=\"10\" dy=\"16\">OMG</tspan><tspan x=\"10\" dy=\"16\">!</tspan></text>"
         },
+        {
+            new WrappedText(10, 30, "Method: Truncation", 45, 12),
+            "<text x=\"10\" y=\"30\" stroke=\"black\" stroke-width=\"2\">Method: Truncation</text>"
+        },
     };
 
 

@@ -45,16 +45,16 @@ namespace bust::svg {
                 bust::util::colors::None,
                 bust::util::colors::None,
                 0,
-                "font-family: monospace; font-style: normal; font-size: 12px; font-weight: bold;"
+                "font-family: monospace; font-style: normal; font-size: 9pt; font-weight: bold;"
             },
             {"DefaultTheme::text",
                 bust::util::colors::None,
                 bust::util::colors::None,
                 0,
-                "font-family: monospace; font-style: normal; font-size: 12px;"
+                "font-family: monospace; font-style: normal; font-size: 9pt;"
             },
             8,
-            12,
+            8,
             12
         );
     }
