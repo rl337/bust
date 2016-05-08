@@ -13,7 +13,7 @@ testcase cases[] = {
        [](TestingTestTest *t) -> void {
            throw std::exception();
        },
-       Abort
+       Error
     },
 
     { "Fail with string assert equal", 

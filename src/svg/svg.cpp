@@ -148,6 +148,11 @@ namespace bust::svg {
     }
 
     int find_last_space_before_len(std::string &str, size_t length, size_t start) {
+
+        if (start >= str.length()) {
+            return -1;
+        }
+
         int last = -1;
         int curr = start;
 
@@ -163,9 +168,14 @@ namespace bust::svg {
             curr++;
         }
 
-        if (last == -1 && curr < str.length()) {
+        if (curr == str.length()) {
             return curr;
         }
+
+        if (last == -1) {
+            return curr;
+        }
+
         return last;
     }
 
@@ -201,6 +211,17 @@ namespace bust::svg {
             stream << "</tspan>";
         }
         stream << "</text>";
+    }
+
+    int WrappedText::rows() {
+        int index = find_last_space_before_len(this->text, this->line_length, 0);
+        int splits = 0;
+        while (index != -1) {
+            index = find_last_space_before_len(this->text, this->line_length, index + 1);
+            splits++;
+        }
+
+        return splits + 1;
     }
 
 }

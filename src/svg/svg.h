@@ -171,7 +171,7 @@ namespace bust::svg {
             WrappedText(int x, int y, std::string text, uint32_t line_length, uint32_t text_height) : WrappedText(x, y, text, line_length, text_height, styles::Default) {}
 
             void append(std::ostream &stream);
-            int rows() { return this->text.length() / line_length; }
+            int rows();
     };
 }
 
