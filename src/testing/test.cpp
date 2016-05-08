@@ -231,7 +231,7 @@ namespace bust::testing {
             this->mesg = "Pass";
         } catch (std::exception& e) {
             this->mesg = e.what();
-            this->status = Abort;
+            this->status = Error;
         } catch (Assertion& a) {
             this->mesg = a.getMessage();
             this->status = a.getStatus();
