@@ -6,6 +6,7 @@
 #include "test_arrays.h"
 #include "test_base64.h"
 #include "test_noise.h"
+#include "test_text.h"
 
 namespace bust::util {
 
@@ -16,5 +17,6 @@ namespace bust::util {
         this->add(new UtilArraysTest());
         this->add(new UtilBase64Test());
         this->add(new UtilNoiseTest());
+        this->add(new UtilTextTest());
     }
 }

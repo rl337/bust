@@ -28,6 +28,7 @@ add_library(bust_util SHARED
     util/arrays.cpp
     util/base64.cpp
     util/noise.cpp
+    util/text.cpp
 )
 
 add_library(bust_math SHARED
@@ -61,6 +62,7 @@ add_library(test_util SHARED
     tests/util/test_arrays.cpp
     tests/util/test_color.cpp
     tests/util/test_noise.cpp
+    tests/util/test_text.cpp
     tests/util/util_suite.cpp
 )
 target_link_libraries( test_util bust_util bust_testing )
