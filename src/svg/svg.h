@@ -9,6 +9,7 @@
 #include "style.h"
 #include "png.h"
 #include "base64.h"
+#include "text.h"
 
 namespace bust::svg {
 
