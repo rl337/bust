@@ -49,14 +49,17 @@ namespace bust::util {
     };
 
     template <typename T>
+    using InterpolationMethod = T (*)(CircularArray2D<T> &array, double x, double y);
+
+    template <typename T>
     class InterpolatedCircularArray2D {
         private:
             CircularArray2D<T> data;
-            T (*interpolation2D)(CircularArray2D<T> &array, double x, double y);
+            InterpolationMethod<T> interpolation2D;
 
         public:
-            InterpolatedCircularArray2D(const T arr[], std::size_t width, std::size_t height, T (*interpolation_method)(CircularArray2D<T> &array, double x, double y)) : data(arr, width, height), interpolation2D(interpolation_method) {}
-            InterpolatedCircularArray2D(std::vector<T> arr, std::size_t width, std::size_t height, T (*interpolation_method)(CircularArray2D<T> &array, double x, double y)) : data(arr, width, height), interpolation2D(interpolation_method) {}
+            InterpolatedCircularArray2D(const T arr[], std::size_t width, std::size_t height, InterpolationMethod<T> interpolation_method) : data(arr, width, height), interpolation2D(interpolation_method) {}
+            InterpolatedCircularArray2D(std::vector<T> arr, std::size_t width, std::size_t height, InterpolationMethod<T> interpolation_method) : data(arr, width, height), interpolation2D(interpolation_method) {}
 
             T get2D(double x, double y);
 
