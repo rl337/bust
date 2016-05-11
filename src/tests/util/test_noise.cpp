@@ -6,7 +6,7 @@
 namespace bust::util {
 
     void UtilNoiseTest::run() {
-        bust::util::RandomSource src(0, 0.0, 1.0);
+        bust::util::DoubleRandomSource src(0, 0.0, 1.0);
 
         double sum = 0.0;
         double count = 1000000.0;
