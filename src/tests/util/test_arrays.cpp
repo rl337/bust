@@ -38,7 +38,7 @@ namespace bust::util {
                    32, 1, 71, 3,
                }, 4, 4
           },
-          [](CircularArray2D<int> &array, Coord2D<int> &index) { return array.get2D(index.x, index.y); },
+          [](CircularArray2D<int> &array, Coord2D<int> &index) { return array.get(index.x, index.y); },
           { {0,0}, {2,2}, {3,3} },
           {32, 71, 3}
         },
@@ -51,7 +51,7 @@ namespace bust::util {
                    29, 3, 79, 3,
                }, 4, 4
           },
-          [](CircularArray2D<int> &array, Coord2D<int> &index) { return array.get2D(index.x, index.y); },
+          [](CircularArray2D<int> &array, Coord2D<int> &index) { return array.get(index.x, index.y); },
           { {4+0,4+0}, {4+2,4+2}, {4+3,4+3} },
           {32, 71, 3}
         }
@@ -69,6 +69,12 @@ namespace bust::util {
             [](CircularArray<int> &array, int &index) { return array.get(index); },
             {0, 2, 3},
             {32, 71, 3}
+        },
+        { "Simple int get/set test",
+            { {0, 0, 0, 0} },
+            [](CircularArray<int> &array, int &index) { int i = index * 3; array.set(index, i); return array.get(index); },
+            {0, 2, 3},
+            {0, 6, 9}
         },
         { "int test of one element",
             { std::vector<int>({32, }) },
@@ -95,7 +101,7 @@ namespace bust::util {
                }, 4, 4,
                bust::util::method_truncate
           },
-          [](InterpolatedCircularArray2D<int> &array, Coord2D<double> &index) { return array.get2D(index.x, index.y); },
+          [](InterpolatedCircularArray2D<int> &array, Coord2D<double> &index) { return array.get(index.x, index.y); },
           { {0.0,0.0}, {2.0,2.0}, {3.0,3.0}, {0.1, 0.1}, {0.7, 0.7}, {1.1, 1.1} },
           {32, 71, 3, 32, 32, 1}
         },
@@ -108,9 +114,21 @@ namespace bust::util {
                }, 3, 3,
                bust::util::method_linear
           },
-          [](InterpolatedCircularArray2D<int> &array, Coord2D<double> &index) { return array.get2D(index.x, index.y); },
+          [](InterpolatedCircularArray2D<int> &array, Coord2D<double> &index) { return array.get(index.x, index.y); },
           { {0.0,0.0}, {1.0,1.0}, {1.0,0.0}, {0.0, 1.0}, {0.5, 0.0}, {0.0, 0.5}, {0.5, 0.5}, {2.0, 0.0}, {2.0, 1.0}, {2.0, 2.0}, {3.0, 0.0}, {3.0, 1.0}, {3.0, 2.0} },
           {0, 30, 10, 50, 5, 25, (int) (0.0/4.0 + 10.0/4.0 + 50.0/4.0 + 30.0/4.0), -10, -50, -40, 0, 50, -20 }
+        },
+        { "Simple 2d truncate get/set test",
+          {
+               {
+                   0, 0,
+                   0, 0,
+               }, 2, 2,
+               bust::util::method_truncate
+          },
+          [](InterpolatedCircularArray2D<int> &array, Coord2D<double> &index) { int v = (index.y*2 + index.x) * 5; array.set_source((int) index.x, (int) index.y, v); return array.get(index.x, index.y); },
+          { {0.0,0.0}, {1.0,0.0}, {0.0,1.0}, {1.0, 1.0} },
+          { 0, 5, 10, 15 }
         },
     };
 

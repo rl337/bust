@@ -51,9 +51,9 @@ namespace bust::util {
         std::stringstream out;
         for(std::size_t y = 0; y < this->height; y++) {
             for(std::size_t x = 0; x < this->width-1; x++) {
-                out << this->get2D(x, y) << ',';
+                out << this->get(x, y) << ',';
             }
-            out << this->get2D(this->width-1, y) << std::endl;
+            out << this->get(this->width-1, y) << std::endl;
         }
         out << std::endl;
 
@@ -62,7 +62,7 @@ namespace bust::util {
 
 
     template <typename T>
-    T InterpolatedCircularArray2D<T>::get2D(double x, double y) {
+    T InterpolatedCircularArray2D<T>::get(double x, double y) {
         return this->interpolation2D(this->data, x, y);
     }
 
@@ -76,7 +76,7 @@ namespace bust::util {
 
     template <typename T>
     T method_truncate(CircularArray2D<T> &array, double x, double y) { 
-        return array.get2D(normalize_coord(x, array.get_width()), normalize_coord(y, array.get_height()));
+        return array.get(normalize_coord(x, array.get_width()), normalize_coord(y, array.get_height()));
     }
 
     template <typename T>
@@ -96,10 +96,10 @@ namespace bust::util {
         double width = (double) array.get_width();
         double height = (double) array.get_height();
 
-        T ul = array.get2D(normalize_coord(min_x, width),  normalize_coord(min_y, height));
-        T ur = array.get2D(normalize_coord(max_x, width),  normalize_coord(min_y, height));
-        T ll = array.get2D(normalize_coord(min_x, width),  normalize_coord(max_y, height));
-        T lr = array.get2D(normalize_coord(max_x, width),  normalize_coord(max_y, height));
+        T ul = array.get(normalize_coord(min_x, width),  normalize_coord(min_y, height));
+        T ur = array.get(normalize_coord(max_x, width),  normalize_coord(min_y, height));
+        T ll = array.get(normalize_coord(min_x, width),  normalize_coord(max_y, height));
+        T lr = array.get(normalize_coord(max_x, width),  normalize_coord(max_y, height));
 
         double ul_scale = (1.0 - delta_min_x) * (1.0 - delta_min_y);
         double ur_scale = (1.0 - delta_max_x) * (1.0 - delta_min_y);
@@ -128,10 +128,10 @@ namespace bust::util {
         double width = (double) array.get_width();
         double height = (double) array.get_height();
 
-        T ul = array.get2D(normalize_coord(min_x, width),  normalize_coord(min_y, height));
-        T ur = array.get2D(normalize_coord(max_x, width),  normalize_coord(min_y, height));
-        T ll = array.get2D(normalize_coord(min_x, width),  normalize_coord(max_y, height));
-        T lr = array.get2D(normalize_coord(max_x, width),  normalize_coord(max_y, height));
+        T ul = array.get(normalize_coord(min_x, width),  normalize_coord(min_y, height));
+        T ur = array.get(normalize_coord(max_x, width),  normalize_coord(min_y, height));
+        T ll = array.get(normalize_coord(min_x, width),  normalize_coord(max_y, height));
+        T lr = array.get(normalize_coord(max_x, width),  normalize_coord(max_y, height));
 
         double ul_scale = (delta_min_x) * (delta_min_y);
         double ur_scale = (delta_max_x) * (delta_min_y);
