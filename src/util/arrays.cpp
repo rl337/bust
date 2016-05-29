@@ -155,22 +155,24 @@ namespace bust::util {
     template Color method_truncate<Color>(CircularArray2D<Color> &array, double x, double y);
     template Color method_cosine<Color>(CircularArray2D<Color> &array, double x, double y);
 
+    template double method_linear<double>(CircularArray2D<double> &array, double x, double y);
+    template double method_truncate<double>(CircularArray2D<double> &array, double x, double y);
+    template double method_cosine<double>(CircularArray2D<double> &array, double x, double y);
 
     template class CircularArray<int>;
     template class CircularArray<uint32_t>;
+    template class CircularArray<double>;
     template class CircularArray<Color>;
 
     template class CircularArray2D<int>;
     template class CircularArray2D<uint32_t>;
+    template class CircularArray2D<double>;
     template class CircularArray2D<Color>;
 
     template class InterpolatedCircularArray2D<int>;
     template class InterpolatedCircularArray2D<uint32_t>;
+    template class InterpolatedCircularArray2D<double>;
     template class InterpolatedCircularArray2D<Color>;
-
-
-
-
 
 }
 

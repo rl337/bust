@@ -5,8 +5,14 @@
 
 namespace bust::util {
 
+    class TestDoubleNoiseSurface : public NoiseSurface<double> {
+
+        public:
+            TestDoubleNoiseSurface(UniformRandomSource<double> src) : NoiseSurface<double>(src, 1024, 1024) {}
+    };
+
     void UtilNoiseTest::run() {
-        bust::util::DoubleRandomSource src(0, 0.0, 1.0);
+        UniformRandomSource<double> src(0, 0.0, 1.0);
 
         double sum = 0.0;
         double count = 1000000.0;
@@ -17,7 +23,18 @@ namespace bust::util {
 
         this->assertEqual("Value should be about 0.5", 0.5, mean, 0.01);
 
+        TestDoubleNoiseSurface surface(src);
+
+        double sum2 = 0.0;
+        double count2 = 1000000.0;
+        for(double j = 0.0; j < count; j+=1.0) {
+            sum2 += src.get();
+        }
+        double mean2 = sum2 / count2;
+   
+        this->assertEqual("Value should be about 0.5", 0.5, mean2, 0.01);
     }
+
 
 }
 

@@ -63,6 +63,7 @@ namespace bust::util {
         public:
             InterpolatedCircularArray2D(const T arr[], std::size_t width, std::size_t height, InterpolationMethod<T> interpolation_method) : data(arr, width, height), interpolation2D(interpolation_method) {}
             InterpolatedCircularArray2D(std::vector<T> arr, std::size_t width, std::size_t height, InterpolationMethod<T> interpolation_method) : data(arr, width, height), interpolation2D(interpolation_method) {}
+            InterpolatedCircularArray2D(std::size_t width, std::size_t height, InterpolationMethod<T> interpolation_method) : data(width, height), interpolation2D(interpolation_method) {}
 
             T get(double x, double y);
             T get_source(int x, int y) { return data.get(x, y); }
