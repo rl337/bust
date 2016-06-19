@@ -17,11 +17,18 @@ namespace bust::util {
             } value;
 
         public:
+            Color() : Color("Empty", 0x00000000) {};
             Color(const std::string n, uint32_t v) : name(n) { value.rgba = v; };
             Color(const std::string n) : Color(n, 0) {};
             Color(const Color &c) : Color(c.name, c.value.rgba) {};
             Color(const uint32_t rgba) : Color("", rgba) {};
-            Color() : Color("Empty", 0x00000000) {};
+            Color(const uint8_t r, const uint8_t g, const uint8_t b, const uint8_t a) : name("") {
+                value.component[0] = r;
+                value.component[1] = g;
+                value.component[2] = b;
+                value.component[3] = a;
+            }
+            Color(const uint8_t r, const uint8_t g, const uint8_t b) : Color(r, g, b, (uint8_t) 0xFF) {}
 
             inline bool operator==(const Color &rhs) {
                 return this->name == rhs.name && this->value.rgba == rhs.value.rgba;

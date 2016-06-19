@@ -127,6 +127,16 @@ target_link_libraries( bust_render_arrays
     bust_svg
 )
 
+add_executable(bust_render_surfaces
+    cmds/render_surfaces/main.cpp
+)
+
+target_link_libraries( bust_render_surfaces
+    bust_util
+    bust_png
+    bust_svg
+)
+
 add_executable( bust_widget_demo
     cmds/widgetdemo/main.cpp
 )
