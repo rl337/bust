@@ -6,7 +6,7 @@
 class SurfacePNG : public bust::png::PNG {
     
     public:
-        SurfacePNG(uint32_t width, uint32_t height, bust::util::NoiseSurface<bust::util::Color> surface) : bust::png::PNG(width, height) {
+        SurfacePNG(uint32_t width, uint32_t height, bust::util::UniformNoiseSurface<bust::util::Color> surface) : bust::png::PNG(width, height) {
  
             for (double x = 0; x < width; x++) {
                 for (double y = 0; y < height; y++) {
@@ -24,9 +24,9 @@ int main (int argc, char *argv[]) {
     uint32_t svg_height = img_height*3 + 24;
 
     bust::util::UniformRandomSource<bust::util::Color> src(5);
-    bust::util::LowResNoiseSurface<bust::util::Color> surface10(src, 1.0);
-    bust::util::LowResNoiseSurface<bust::util::Color> surface15(src, 0.5);
-    bust::util::LowResNoiseSurface<bust::util::Color> surface20(src, 0.25);
+    bust::util::LowResUniformNoiseSurface<bust::util::Color> surface10(src, 1.0);
+    bust::util::LowResUniformNoiseSurface<bust::util::Color> surface15(src, 0.5);
+    bust::util::LowResUniformNoiseSurface<bust::util::Color> surface20(src, 0.25);
 
     SurfacePNG scale10(img_width, img_height, surface10);
     SurfacePNG scale15(img_width, img_height, surface15);

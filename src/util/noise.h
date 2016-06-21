@@ -46,41 +46,60 @@ namespace bust::util {
     template <typename T>
     class NoiseSurface {
         private:
-            UniformRandomSource<T> source;
-            InterpolatedCircularArray2D<T> data;
-            double scale;
+            double xscale;
+            double yscale;
     
         protected:
-            NoiseSurface(UniformRandomSource<T> &src, uint32_t w, uint32_t h, double scale);
-            NoiseSurface(UniformRandomSource<T> &src, uint32_t w, uint32_t h) : NoiseSurface(src, w, h, 1.0) {}
+            NoiseSurface(double xscale, double yscale) : xscale(xscale), yscale(yscale) { }
+            NoiseSurface() : NoiseSurface(1.0, 1.0) { }
 
         public:
-            T get(double x, double y) { return this->data.get(x * scale, y * scale); }
+            double get_xscale() { return xscale; }
+            double get_yscale() { return yscale; }
+            virtual T get(double x, double y) = 0;
     };
 
     template <typename T>
-    class HighResNoiseSurface : public NoiseSurface<T>{
+    class UniformNoiseSurface : public NoiseSurface<T> {
+        private:
+            UniformRandomSource<T> source;
+            InterpolatedCircularArray2D<T> data;
+    
+        protected:
+            UniformNoiseSurface(UniformRandomSource<T> &src, uint32_t w, uint32_t h, double xscale, double yscale);
+            UniformNoiseSurface(UniformRandomSource<T> &src, uint32_t w, uint32_t h) : UniformNoiseSurface(src, w, h, 1.0, 1.0) {}
+
         public:
-            HighResNoiseSurface(UniformRandomSource<T> &src, double scale) : NoiseSurface<T>(src, 1024, 1024, scale) {}
-            HighResNoiseSurface(UniformRandomSource<T> &src) : HighResNoiseSurface(src, 1.0) {}
+            virtual T get(double x, double y) { return this->data.get(x * this->get_xscale(), y * this->get_yscale()); }
+    };
+
+    template <typename T>
+    class HighResUniformNoiseSurface : public UniformNoiseSurface<T>{
+        public:
+            HighResUniformNoiseSurface(UniformRandomSource<T> &src, double xscale, double yscale) : UniformNoiseSurface<T>(src, 1024, 1024, xscale, yscale) {}
+            HighResUniformNoiseSurface(UniformRandomSource<T> &src, double scale) : UniformNoiseSurface<T>(src, 1024, 1024, scale, scale) {}
+            HighResUniformNoiseSurface(UniformRandomSource<T> &src) : HighResUniformNoiseSurface(src, 1.0) {}
 
     };
 
     template <typename T>
-    class MediumResNoiseSurface : public NoiseSurface<T>{
+    class MediumResUniformNoiseSurface : public UniformNoiseSurface<T>{
         public:
-            MediumResNoiseSurface(UniformRandomSource<T> &src, double scale) : NoiseSurface<T>(src, 256, 256, scale) {}
-            MediumResNoiseSurface(UniformRandomSource<T> &src) : MediumResNoiseSurface(src, 1.0) {}
+            MediumResUniformNoiseSurface(UniformRandomSource<T> &src, double xscale, double yscale) : UniformNoiseSurface<T>(src, 256, 256, xscale, yscale) {}
+            MediumResUniformNoiseSurface(UniformRandomSource<T> &src, double scale) : UniformNoiseSurface<T>(src, 256, 256, scale, scale) {}
+            MediumResUniformNoiseSurface(UniformRandomSource<T> &src) : MediumResUniformNoiseSurface(src, 1.0) {}
 
     };
 
     template <typename T>
-    class LowResNoiseSurface : public NoiseSurface<T>{
+    class LowResUniformNoiseSurface : public UniformNoiseSurface<T>{
         public:
-            LowResNoiseSurface(UniformRandomSource<T> &src, double scale) : NoiseSurface<T>(src, 64, 64, scale) {}
-            LowResNoiseSurface(UniformRandomSource<T> &src) : LowResNoiseSurface<T>(src, 1.0) {}
+            LowResUniformNoiseSurface(UniformRandomSource<T> &src, double xscale, double yscale) : UniformNoiseSurface<T>(src, 64, 64, xscale, yscale) {}
+            LowResUniformNoiseSurface(UniformRandomSource<T> &src, double scale) : UniformNoiseSurface<T>(src, 64, 64, scale, scale) {}
+            LowResUniformNoiseSurface(UniformRandomSource<T> &src) : LowResUniformNoiseSurface<T>(src, 1.0) {}
 
     };
+
 }
 
 #endif

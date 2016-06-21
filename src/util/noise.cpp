@@ -4,7 +4,7 @@
 namespace bust::util {
 
     template <typename T>
-    NoiseSurface<T>::NoiseSurface(UniformRandomSource<T> &src, uint32_t w, uint32_t h, double scale) : source(src), data(w, h, method_cosine), scale(scale) {
+    UniformNoiseSurface<T>::UniformNoiseSurface(UniformRandomSource<T> &src, uint32_t w, uint32_t h, double xscale, double yscale) : NoiseSurface<T>(xscale, yscale), source(src), data(w, h, method_cosine) {
         for (uint32_t i = 0; i < w; i++) {
             for (uint32_t j = 0; j < h; j++) {
                 T value = src.get();
@@ -13,6 +13,6 @@ namespace bust::util {
         }
     }
 
-    template class NoiseSurface<double>;
-    template class NoiseSurface<bust::util::Color>;
+    template class UniformNoiseSurface<double>;
+    template class UniformNoiseSurface<bust::util::Color>;
 }

@@ -5,10 +5,10 @@
 
 namespace bust::util {
 
-    class TestDoubleNoiseSurface : public NoiseSurface<double> {
+    class TestDoubleNoiseSurface : public UniformNoiseSurface<double> {
 
         public:
-            TestDoubleNoiseSurface(UniformRandomSource<double> src) : NoiseSurface<double>(src, 1024, 1024) {}
+            TestDoubleNoiseSurface(UniformRandomSource<double> src) : UniformNoiseSurface<double>(src, 1024, 1024) {}
     };
 
     void UtilNoiseTest::run() {
