@@ -54,7 +54,9 @@ namespace bust::svg {
             SVG(std::vector<Shape *> shapes) : SVG("", "", 0, 0, shapes) {}
             SVG(std::string title, std::string description, int width, int height, Shape *shapes[], std::size_t n, Style style);
             SVG(std::string title, std::string description, int width, int height, Shape *shapes[], std::size_t n) : SVG(title, description, width, height, shapes, n, styles::Default) { }
+            SVG(std::string title, std::string description, int width, int height) : SVG(title, description, width, height, {}, 0, styles::Default) { }
             SVG(std::string title, std::string description, Shape *shapes[], std::size_t n) : SVG(title, description, 0, 0, shapes, n, styles::Default) {}
+            SVG(std::string title, std::string description) : SVG(title, description, 0, 0) {}
             SVG(Shape *shapes[], std::size_t n) : SVG("", "", shapes, n) {}
 
             inline void add(Shape *shape) { this->shapes.push_back(shape); }
