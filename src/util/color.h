@@ -23,10 +23,10 @@ namespace bust::util {
             Color(const Color &c) : Color(c.name, c.value.rgba) {};
             Color(const uint32_t rgba) : Color("", rgba) {};
             Color(const uint8_t r, const uint8_t g, const uint8_t b, const uint8_t a) : name("") {
-                value.component[0] = r;
-                value.component[1] = g;
-                value.component[2] = b;
-                value.component[3] = a;
+                value.component[3] = r;
+                value.component[2] = g;
+                value.component[1] = b;
+                value.component[0] = a;
             }
             Color(const uint8_t r, const uint8_t g, const uint8_t b) : Color(r, g, b, (uint8_t) 0xFF) {}
 

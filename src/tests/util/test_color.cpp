@@ -25,6 +25,12 @@ namespace bust::util {
               return Color("TestColor1", 0x102030FF) + Color("TestColor2", 0x102030FF);
           },
           Color("TestColor1", 0x204060FF)
+        },
+        { "component constructor", 
+          [](testing::Test &t, UtilColorTestCase &c) {
+              return Color(0x10, 0x20, 0x30, 0xFF);
+          },
+          Color("", 0x102030FF)
         }
     };
 
