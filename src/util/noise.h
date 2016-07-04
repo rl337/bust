@@ -2,6 +2,7 @@
 #define __JV_UTIL_NOISE_H__
 
 #include <cstdint>
+#include <cmath>
 #include <random>
 
 #include "arrays.h"
@@ -58,6 +59,52 @@ namespace bust::util {
             double get_yscale() { return yscale; }
             virtual T get(double x, double y) = 0;
     };
+
+    template <typename T>
+    class CheckerSurface : public NoiseSurface<T> {
+        private:
+            T black;
+            T white;
+            double width;
+            double height;
+        public:
+            CheckerSurface(double xscale, double yscale, double width, double height, T black, T white) : NoiseSurface<T>(xscale, yscale), black(black), white(white), width(width), height(height) { }
+            CheckerSurface(double width, double height, T black, T white) : CheckerSurface(1.0, 1.0, width, height, black, white) { }
+
+            T get(double x, double y);
+    };
+
+    enum LayerOperation {
+        Addition,
+        Subtraction
+    };
+
+    template <typename SurfaceType>
+    class LayerDefinition {
+        public:
+            LayerOperation operation;
+            SurfaceType surface;
+
+            LayerDefinition(LayerOperation operation, SurfaceType surface) : operation(operation), surface(surface) { }
+    };
+
+    template <typename SurfaceType, typename T>
+    class LayeredNoiseSurface : public NoiseSurface<T> {
+        private:
+            std::vector<LayerDefinition<SurfaceType>> layers;
+
+        public:
+            LayeredNoiseSurface(double xscale, double yscale, std::vector<LayerDefinition<SurfaceType>> layers) : NoiseSurface<T>(xscale, yscale), layers(layers) { }
+            LayeredNoiseSurface(double xscale, double yscale) : NoiseSurface<T>(xscale, yscale) { }
+
+            T get(double x, double y);
+    };
+
+    class NoLayersSurfaceException: public std::exception {
+        virtual const char* what() const throw() {
+            return "No Layered Surfaces in LayeredNoiseSurface";
+        }
+    } no_layers_surface_exception;
 
     template <typename T>
     class UniformNoiseSurface : public NoiseSurface<T> {
