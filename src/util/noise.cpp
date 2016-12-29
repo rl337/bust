@@ -35,8 +35,6 @@ namespace bust::util {
         return final;
     }
 
-#include <iostream>
-
     template <typename T>
     T CheckerSurface<T>::get(double x, double y) {
         double xprime = fmod(x, 2 * width);
@@ -58,8 +56,10 @@ namespace bust::util {
     }
 
     template class LayerDefinition<double>;
+    template class LayerDefinition<bust::util::Color>;
     template class CheckerSurface<double>;
     template class LayeredNoiseSurface<CheckerSurface<double>, double>;
+    template class LayeredNoiseSurface<bust::util::LowResUniformNoiseSurface<bust::util::Color>, bust::util::Color>;
 
     template class UniformNoiseSurface<double>;
     template class UniformNoiseSurface<bust::util::Color>;

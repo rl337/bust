@@ -23,7 +23,7 @@ namespace bust::util {
             std::uniform_real_distribution<double> distribution;
 
         public:
-            UniformRandomSource(int seed, double min=0.0, double max=1.0) {}
+            UniformRandomSource(int seed, double min=0.0, double max=1.0) : distribution(min, max) {}
             double get() { return this->distribution(this->source); }
     };
 
@@ -34,7 +34,7 @@ namespace bust::util {
             std::uniform_int_distribution<uint8_t> distribution;
 
         public:
-            UniformRandomSource(int seed) {}
+            UniformRandomSource(int seed, uint8_t min=0, uint8_t max=255) : distribution(min, max) {}
             Color get() {
                 return Color(
                     this->distribution(this->source),

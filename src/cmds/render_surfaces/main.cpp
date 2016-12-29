@@ -23,6 +23,7 @@ struct SurfaceExample {
 };
 
 bust::util::UniformRandomSource<bust::util::Color> src(5);
+bust::util::UniformRandomSource<bust::util::Color> src2(5, 0, 127);
 std::vector<SurfaceExample> examples = {
     { "Noise Surface: 1.0 Scale",
       "This is a Noise Surface that uses a 1:1 scaling between the underlying noise array and coords",
@@ -51,6 +52,17 @@ std::vector<SurfaceExample> examples = {
     { "Noise Surface: Y 4.0 Scale",
       "This is a Noise Surface that uses a 4:1 scaling between the underlying noise array and coords only in Y axis",
       new bust::util::LowResUniformNoiseSurface<bust::util::Color>(src,  1.0, 1.0/4.0),
+    },
+    { "Layered with two noise surfaces:",
+      "This is a Layered Surface that uses a 16:1 scaling on one layer and 1:1 on the other",
+      new bust::util::LayeredNoiseSurface<bust::util::LowResUniformNoiseSurface<bust::util::Color>, bust::util::Color>(
+          1.0,
+          1.0, 
+          { 
+              {bust::util::Addition, bust::util::LowResUniformNoiseSurface<bust::util::Color>(src2,  1.0/16.0, 1.0/16.0)},
+              {bust::util::Addition, bust::util::LowResUniformNoiseSurface<bust::util::Color>(src2,  1.0, 1.0)},
+          }
+      )
     },
 };
 

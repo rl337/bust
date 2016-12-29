@@ -71,6 +71,10 @@ namespace bust::util {
             coord += unit;
         }
 
+        while (coord >= unit) {
+            coord -= unit;
+        }
+
         return (std::size_t) coord;
     }
 
@@ -101,12 +105,14 @@ namespace bust::util {
         T ll = array.get(normalize_coord(min_x, width),  normalize_coord(max_y, height));
         T lr = array.get(normalize_coord(max_x, width),  normalize_coord(max_y, height));
 
-        double ul_scale = (1.0 - delta_min_x) * (1.0 - delta_min_y);
-        double ur_scale = (1.0 - delta_max_x) * (1.0 - delta_min_y);
-        double ll_scale = (1.0 - delta_min_x) * (1.0 - delta_max_y);
-        double lr_scale = (1.0 - delta_max_x) * (1.0 - delta_max_y);
+        double rounding = 255.0;
+        double ul_scale = round((1.0 - delta_min_x) * (1.0 - delta_min_y) * rounding)/rounding;
+        double ur_scale = round((1.0 - delta_max_x) * (1.0 - delta_min_y) * rounding)/rounding;
+        double ll_scale = round((1.0 - delta_min_x) * (1.0 - delta_max_y) * rounding)/rounding;
+        double lr_scale = round((1.0 - delta_max_x) * (1.0 - delta_max_y) * rounding)/rounding;
+        double total_scale = ul_scale + ur_scale + ll_scale + lr_scale;
 
-        T result = ul * ul_scale + ur * ur_scale + ll * ll_scale + lr * lr_scale;
+        T result = ul * (ul_scale/total_scale) + ur * (ur_scale/total_scale) + ll * (ll_scale/total_scale) + lr * (lr_scale/total_scale);
         return result;
     }
 
@@ -133,12 +139,14 @@ namespace bust::util {
         T ll = array.get(normalize_coord(min_x, width),  normalize_coord(max_y, height));
         T lr = array.get(normalize_coord(max_x, width),  normalize_coord(max_y, height));
 
-        double ul_scale = (delta_min_x) * (delta_min_y);
-        double ur_scale = (delta_max_x) * (delta_min_y);
-        double ll_scale = (delta_min_x) * (delta_max_y);
-        double lr_scale = (delta_max_x) * (delta_max_y);
+        double rounding = 255.0;
+        double ul_scale = round(delta_min_x * delta_min_y * rounding)/rounding;
+        double ur_scale = round(delta_max_x * delta_min_y * rounding)/rounding;
+        double ll_scale = round(delta_min_x * delta_max_y * rounding)/rounding;
+        double lr_scale = round(delta_max_x * delta_max_y * rounding)/rounding;
+        double total_scale = ul_scale + ur_scale + ll_scale + lr_scale;
 
-        T result = ul * ul_scale + ur * ur_scale + ll * ll_scale + lr * lr_scale;
+        T result = ul * (ul_scale/total_scale) + ur * (ur_scale/total_scale) + ll * (ll_scale/total_scale) + lr * (lr_scale/total_scale);
         return result;
     }
 

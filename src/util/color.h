@@ -2,6 +2,7 @@
 #define __JV_UTIL_COLOR_H__
 
 #include <cstddef>
+#include <cmath>
 #include <iostream>
 #include <iomanip>
 #include <string>
@@ -66,8 +67,29 @@ namespace bust::util {
                 return result;
             }
 
+            Color operator-(const Color &rhs) {
+                Color result(*this);
+                result.value.component[3] = this->value.component[3] - rhs.value.component[3];
+                result.value.component[2] = this->value.component[2] - rhs.value.component[2];
+                result.value.component[1] = this->value.component[1] - rhs.value.component[1];
+
+                // Take the largest Alpha of the two. Don't actually subtract.
+                if (this->value.component[0] > rhs.value.component[0]) {
+                    result.value.component[0] = this->value.component[0];
+                } else { 
+                    result.value.component[0] = rhs.value.component[0];
+                }
+
+                return result;
+            }
+
             inline std::string getName() const { return this->name; }
             inline uint32_t getValue() const { return this->value.rgba; }
+
+            inline uint8_t getRed() const { return this->value.component[3]; }
+            inline uint8_t getGreen() const { return this->value.component[2]; }
+            inline uint8_t getBlue() const { return this->value.component[1]; }
+            inline uint8_t getAlpha() const { return this->value.component[0]; }
     };
 
     std::ostream& operator<<(std::ostream &o, const Color &a);

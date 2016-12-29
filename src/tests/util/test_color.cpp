@@ -69,6 +69,14 @@ namespace bust::util {
             t.run(*this);
         }
 
+        Color custom3("custom3", 0x01010100);
+        for(int i = 0; i < 256; i++) {
+            Color custom4 = custom3 * ((double) i);
+            this->assertEqual("Red value should match", i, ((int) custom4.getRed()));
+            this->assertEqual("Green value should match", i, ((int) custom4.getGreen()));
+            this->assertEqual("Blue value should match", i, ((int) custom4.getBlue()));
+            this->assertEqual("Alpha should be a constant 0", 0, ((int) custom4.getAlpha()));
+        }
 
     }
 
